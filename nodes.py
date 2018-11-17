@@ -28,14 +28,17 @@ def makeTable(levels, minNodesPerLevel, maxNodesPerLevel):
     return table
 
 
+def addConnections(table, maxDegree):
+    pass
+
 
 levels = 3
-minNodesPerLevel = 3
-maxNodesPerLevel = 9
+minNodes = 3
+maxNodes = 9
 startDegree = 4
 exitDegree = 4
 
-table = makeTable(3, 3, 9)
+table = makeTable(levels, minNodes, maxNodes)
 infoTable(table)
 displayTable(table)
 
