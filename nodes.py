@@ -1,5 +1,7 @@
 import sys
 import random
+import json
+from string import Template
 
 
 class Node:
@@ -83,7 +85,41 @@ class TreeTable:
             self.connect(prev, current)
             self.randConnectsThisLevel(current, nConnects)
             prev = current
-    
+
+            
+    def generatePage(self):
+        """generatePage converts the TreeTable into a json format,
+        specifically designed for use by vis.js
+
+        """
+        nodeData = []
+        edgeData = []
+        def idstring(i, j):
+            return "({0},{1})".format(i, j)
+        
+        def labelstring(i, j):
+            if (i == 0) and (j == 0):
+                return "Entrance"
+            if i == self.depth()-1:
+                return "Exit"
+            return "Room {0}".format(idstring(i, j))
+        
+        for i, row in enumerate(self.table):
+            for j, node in enumerate(row):
+                nodeData.append({
+                    "id": idstring(i,j),
+                    "label":labelstring(i,j),
+                    "level": i
+                })
+                for k in node.connections:
+                    i2, j2 = k
+                    edgeData.append({
+                        "from":idstring(i, j),
+                        "to": idstring(i2, j2)
+                    })
+        # convert node and edge data into JSON and print.
+        data = {'nodeData':nodeData, 'edgeData':edgeData}
+        return json.dumps(data)
         
     
 def makeTable(levels, minNodesPerLevel, maxNodesPerLevel):
@@ -103,19 +139,39 @@ def makeTable(levels, minNodesPerLevel, maxNodesPerLevel):
 
 
 # ----------------------------------------------------------------------
-#  Main
+#  Routines
 # ______________________________________________________________________
 
-levels = 5
-minNodes = 3
-maxNodes = 9
-startDegree = 4
-exitDegree = 4
+
+def example1():
+    levels = 10
+    minNodes = 3
+    maxNodes = 9
+    tree = TreeTable(levels, minNodes, maxNodes)
+    tree.createSinglePathWithDeadEnds(5)
+    return tree
+
+def example2():
+    tree = TreeTable(10, 3, 9)
+    for i in range(3):
+        tree.createSinglePathWithDeadEnds(5)
+    return tree
+
+def MainGen():
+    tree = example2()
+    jsondata = tree.generatePage()
+    templ = Template('var mydata = ${data}')
+    print(templ.substitute(data=jsondata))
 
 
+# ----------------------------------------------------------------------
+#  Main Program and Args
+# ______________________________________________________________________
 
-tree = TreeTable(levels, minNodes, maxNodes)
-tree.info()
-print(tree)
-tree.createSinglePathWithDeadEnds(5)
-print(tree)
+
+# TODO: add argparse and some other options
+
+if (len(sys.argv) == 2) and (sys.argv[1] == 'generate'):
+    MainGen()
+
+
