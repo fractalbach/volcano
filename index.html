@@ -7,12 +7,15 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css"/>
         <style type="text/css">
-            body {
+            html, body, #wholescreen {
                 position: fixed;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
+            }
+
+            #wholescreen {
                 display: grid;
             }
 
@@ -62,7 +65,7 @@
             }
 
             @media (orientation: portrait) {
-                body {
+                #wholescreen {
                     grid-template-rows: 5em auto 6em;
                 }
 
@@ -78,7 +81,7 @@
             }
 
             @media (orientation: landscape) {
-                body {
+                #wholescreen {
                     grid-template-columns: 5em auto 6em;
                 }
 
@@ -95,68 +98,19 @@
         </style>
     </head>
     <body>
-        <div id="wrapTitle">
-            <h1 id="title">Random Volcano Dungeon as a Graph</h1>
-        </div>
-        <div id="wrapGraph">
-            <div id="mynetwork"></div>
-        </div>
-        <div id="wrapControls">
-            <div class="controlButton" id="ButtonAddPath">Add Path</div>
-            <div class="controlButton" id="ButtonChangeView">Change View</div>
+        <div id="wholescreen">
+            <div id="wrapTitle">
+                <h1 id="title">Random Volcano Dungeon as a Graph</h1>
+            </div>
+            <div id="wrapGraph">
+                <div id="mynetwork"></div>
+            </div>
+            <div id="wrapControls">
+                <div class="controlButton" id="ButtonAddPath">Add Path</div>
+                <div class="controlButton" id="ButtonChangeView">Change View</div>
+            </div>
         </div>
         <script src="pages/data.js"></script>
         <script src="pages/nodez.js"></script>
-        <script type="text/javascript">
-            var container = document.getElementById('mynetwork');
-            //             var data = {
-            //                 nodes: new vis.DataSet(mydata.nodeData),
-            //                 edges: new vis.DataSet(mydata.edgeData)
-            //             };
-            //             var data = {
-            //                     nodes: MyGraphCreator.dataForVis.nodes,
-            //                     edges: MyGraphCreator.dataForVis.edges,
-            //             }
-            var options = {
-                layout: {
-                    hierarchical: {
-                        enabled: true,
-                        treeSpacing: 1,
-                        nodeSpacing: 1,
-                        parentCentralization: true,
-                    }
-                },
-                nodes: {
-                    shape: 'circle',
-                },
-            };
-
-            var myNetwork = new vis.Network(container,{},options);
-            let g = MyGraphCreator;
-            let updateGraph = ()=>{
-                g.dataForVis = g.combineGraphData(g.nodeTable, g.edgeChart);
-                myNetwork.setData(g.dataForVis);
-                myNetwork.setOptions(options);
-            }
-            updateGraph()
-
-            let addRandomPath = ()=>{
-                g.createSinglePath(g.nodeTable, g.edgeChart);
-                updateGraph();
-            }
-            let changeView = ()=>{
-                if (options.layout.hierarchical.enabled === true) {
-                    options.layout.hierarchical.enabled = false;
-                    myNetwork.setOptions(options);
-                    return;
-                } else {
-                    options.layout.hierarchical.enabled = true;
-                }
-                updateGraph();
-            }
-
-            document.querySelector('#ButtonAddPath').addEventListener('click', addRandomPath);
-            document.querySelector('#ButtonChangeView').addEventListener('click', changeView)
-        </script>
     </body>
 </html>
