@@ -102,37 +102,61 @@
             <div id="mynetwork"></div>
         </div>
         <div id="wrapControls">
-            <div class="controlButton">Hello</div>
-            <div class="controlButton">How are you</div>
-            <div class="controlButton">Go to the Next Node</div>
-            <div class="controlButton">Random Graph</div>
-            <div class="controlButton">Button1</div>
-            <div class="controlButton">Button2</div>
-            <div class="controlButton">Buttonz</div>
-            <div class="controlButton">Button5</div>
-            <div class="controlButton">Buttons</div>
+            <div class="controlButton" id="ButtonAddPath">Add Path</div>
+            <div class="controlButton" id="ButtonChangeView">Change View</div>
         </div>
         <script src="pages/data.js"></script>
         <script src="pages/nodez.js"></script>
         <script type="text/javascript">
             var container = document.getElementById('mynetwork');
-            var data = {
-                nodes: new vis.DataSet(mydata.nodeData),
-                edges: new vis.DataSet(mydata.edgeData)
-            };
+            //             var data = {
+            //                 nodes: new vis.DataSet(mydata.nodeData),
+            //                 edges: new vis.DataSet(mydata.edgeData)
+            //             };
+            //             var data = {
+            //                     nodes: MyGraphCreator.dataForVis.nodes,
+            //                     edges: MyGraphCreator.dataForVis.edges,
+            //             }
             var options = {
                 layout: {
                     hierarchical: {
                         enabled: true,
+                        treeSpacing: 1,
+                        nodeSpacing: 1,
+                        parentCentralization: true,
                     }
                 },
                 nodes: {
-                    shape: 'square',
+                    shape: 'circle',
                 },
             };
-            var network = new vis.Network(container,data,options);
 
+            var myNetwork = new vis.Network(container,{},options);
+            let g = MyGraphCreator;
+            let updateGraph = ()=>{
+                g.dataForVis = g.combineGraphData(g.nodeTable, g.edgeChart);
+                myNetwork.setData(g.dataForVis);
+                myNetwork.setOptions(options);
+            }
+            updateGraph()
+
+            let addRandomPath = ()=>{
+                g.createSinglePath(g.nodeTable, g.edgeChart);
+                updateGraph();
+            }
+            let changeView = ()=>{
+                if (options.layout.hierarchical.enabled === true) {
+                    options.layout.hierarchical.enabled = false;
+                    myNetwork.setOptions(options);
+                    return;
+                } else {
+                    options.layout.hierarchical.enabled = true;
+                }
+                updateGraph();
+            }
+
+            document.querySelector('#ButtonAddPath').addEventListener('click', addRandomPath);
+            document.querySelector('#ButtonChangeView').addEventListener('click', changeView)
         </script>
-        
     </body>
 </html>
