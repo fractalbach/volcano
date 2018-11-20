@@ -134,7 +134,6 @@ var GraphGenerator = (function() {
 	return new GraphGenerator()
 }());
 
-
 var gamestate = (function(){
 
 	let g = GraphGenerator;
@@ -160,10 +159,6 @@ var gamestate = (function(){
 	}
 	return new GameState()
 }());
-
-
-
-
 
 
 var GraphDisplay = (function() {
@@ -213,16 +208,22 @@ var GraphDisplay = (function() {
 	updateGraph();
 	// changeView();
 
-	// _________________________________________
-	//  Overlay Togglers
-	// =========================================
+
+}());
+
+
+// _________________________________________
+//  Overlay Togglers
+// =========================================
+(function() {
 
 	// Special Format: (button, overlay, originText, activeText)
 	// Used to create overlay togglers by pressing these buttons.
 	// This structure is exactly the same as the arguments for 
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
-		['#ButtonShowMenu', '#menuOverlay', 'show menu', 'hide menu'],
+		['#buttonShowMenu', '#overlayMenu', 'Show Menu', 'Hide Menu'],
+		['#buttonItems', '#overlayItems', 'Items', 'Items'],
 	]
 
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.
@@ -261,7 +262,6 @@ var GraphDisplay = (function() {
 	// initialize by making sure that the correct overlay is showing.
 	updateAll();
 
-
 	let toggleHandler = (n)=> {
 		if (n === currentlyEnabled) {
 			currentlyEnabled = -1;	
@@ -289,9 +289,6 @@ var GraphDisplay = (function() {
 	}
 
 }());
-
-
-
 
 console.log(GraphGenerator);
 console.log(gamestate);

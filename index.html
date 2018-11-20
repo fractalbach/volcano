@@ -7,176 +7,47 @@
         <meta name="author" content="Chris Achenbach">
         <meta name="description" content="Randomly generated graphs!">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css"/>
+        <link href="src/mainstyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="wholescreen">
+
+
             <div id="wrapTitle">
                 <h1 id="title">Random Volcano Dungeon as a Graph</h1>
             </div>
+
+            <div id="wrapGraph" class="middleOverlay">
+                <div id="mynetwork"></div>
+            </div>
+
             <div id="overlayUniverse">
-                <div id="wrapGraph" class="middleOverlay">
-                    <div id="mynetwork"></div>
+
+                <div id="overlayMenu" class="middleOverlay hidden">
+                    <div id="overlayMenuText">Hello there! This is the Volcano Game Menu!</div>
                 </div>
-                <div id="menuOverlay" class="middleOverlay hidden">Hello there! This is the Volcano Game Menu!</div>
+                
+                <div id="overlayItems" class="middleOverlay hidden">
+                    <h2>Inventory</h2>
+                </div>
+
             </div>
+
             <div id="wrapControls">
-                <div tabindex=0 role="button" class="controlButton" id="ButtonShowMenu">Show Menu</div>
+                <div tabindex=0 role="button" class="controlButton" id="buttonShowMenu">Show Menu</div>
+                <div tabindex=0 role="button" class="controlButton" id="buttonItems">Items</div>
             </div>
+
+
         </div>
-        <style type="text/css">
-            html, body, #wholescreen {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
 
-            #wrapTitle {
-                overflow: auto;
-            }
 
-            #title {
-                white-space: nowrap;
-            }
 
-            #wrapGraph {
-                overflow: hidden;
-                padding: 0.5em;
-            }
-
-            #mynetwork {
-                border: 1px solid lightgray;
-                width: 100%;
-                height: 100%;
-            }
-
-            #wrapControls {
-                user-select: none;
-                padding: 0.5em;
-            }
-
-            #menuOverlay {
-                text-align: center;
-                background: lightblue;
-                padding: 20%;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            .controlButton {
-                text-align: center;
-                cursor: pointer;
-                display: inline-block;
-                width: 4em;
-                height: 4em;
-                background: #ecf;
-                border-radius: 30%;
-                padding: 0.5em;
-                overflow: hidden;
-                border: 1px solid rgb(67, 17, 76);
-                box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.7);
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                /* outline: none; */
-                -webkit-transition-duration: 0.5s;
-                transition-duration: 0.5s;
-            }
-
-            .controlButton:hover {
-                background: lightblue;
-            }
-
-            .controlButton:active {
-                border-style: inset;
-                background: lightgreen;
-                box-shadow: inset 1px 2px 2px 0px rgba(0, 0, 0, 0.7);
-            }
-
-            .ActivatedButton {
-                background: purple;
-                color: white;
-            }
-
-            @media (orientation: portrait) {
-                #wrapTitle {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: calc(100% - 5em);
-                    /* padding: 0.5em; */
-                }
-
-                #wrapControls {
-                    position: fixed;
-                    top: calc(100% - 6em);
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    padding-top: 0;
-                    white-space: nowrap;
-                    overflow-y: hidden;
-                    overflow-x: auto;
-                }
-
-                .middleOverlay, #wrapGraph {
-                    position: fixed;
-                    top: 5em;
-                    left: 0;
-                    right: 0;
-                    bottom: 6em;
-                }
-
-                .controlButton {
-                    white-space: initial;
-                }
-            }
-
-            @media (orientation: landscape) {
-                #wrapTitle {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: calc(100% - 5em);
-                    bottom: 0;
-                }
-
-                #wrapControls {
-                    position: fixed;
-                    top: 0;
-                    left: calc(100% - 6em);
-                    right: 0;
-                    bottom: 0;
-                    padding-left: 0;
-                    white-space: wrap;
-                    overflow-y: auto;
-                    overflow-x: hidden;
-                }
-
-                .middleOverlay, #wrapGraph {
-                    position: fixed;
-                    top: 0;
-                    left: 5em;
-                    right: 6em;
-                    bottom: 0;
-                }
-
-                h1 {
-                    writing-mode: vertical-rl
-                }
-            }
-        </style>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-        <script src="pages/data.js"></script>
-        <script src="pages/nodez.js"></script>
+        <script type="text/javascript" src="src/nodez.js"></script>
         <script type="text/javascript">
             // Fix for allowing mobile safari to have touch effeects.
             document.addEventListener("touchstart", function() {}, true);
-
-            //overlay test.
-
         </script>
     </body>
 </html>
