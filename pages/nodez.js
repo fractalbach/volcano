@@ -10,6 +10,7 @@ var GraphMaster9000 = (function() {
 		n['color'] = 'green';
 		return n;
 	}
+
 	let makeFinalNode = (level)=> {
 		let n = node('end', level);
 		n['shape'] = 'star';
@@ -28,30 +29,19 @@ var GraphMaster9000 = (function() {
 	}
 
 	let makeTable = (nLevels, minNodes, maxNodes)=> {
-
-		// Create empty table.
 		let table = new Array(nLevels)
 		for (let i = 0; i < nLevels; i++) {
 			table[i] = new Array()
 		}
-
-		// define the last Index int.
 		let lastIndex = nLevels - 1
-
-		// Add first node to the table.
 		table[0].push(makeStartNode())
-
-		// Add a random number of nodes to each level in between.
 		for (let i = 1; i < lastIndex; i++) {
 			let nNodes = randint(minNodes, maxNodes);
 			for (let j = 0; j < nNodes; j++) {
 				table[i].push(node(`room(${i},${j})`, i))
 			}
 		}
-
-		// Add the last node to the table.
 		table[lastIndex].push(makeFinalNode(lastIndex));
-
 		return table;
 	}
 
@@ -67,7 +57,6 @@ var GraphMaster9000 = (function() {
 			prevCol = theChosenColumn;
 		}
 	}
-
 
 	let makeEdgeChart = (table)=> {
 		let chart = new Map();
@@ -122,84 +111,117 @@ var GraphMaster9000 = (function() {
 	}
 
 
-	/* 
-		Private data members for the graphmaster90000
-	*/
-	let _dataForVis = Symbol('dataForVis');
+	let _dataForVis;
+	let nPaths = 5;
 
 	class GraphMaster9000 {
 		constructor() {
 			this.nodeMatrix = makeTable(8, 5, 10);
 			this.edgeSetMap = makeEdgeChart(this.nodeMatrix);
-			this.createSinglePath();
+			for (let i = 0; i < nPaths; i++) {
+				createSinglePath(this.nodeMatrix, this.edgeSetMap);
+			}
+			_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
 		}
-
-		test() {
-			return this.nodeMatrix;
-		}
-
 		createSinglePath() {
 			createSinglePath(this.nodeMatrix, this.edgeSetMap);
 		}
-
 		get dataForVis() {
 			_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
 			return _dataForVis;
 		}
-
 	}
-
 	return new GraphMaster9000()
+}());
 
+
+var gamestate = (function(){
+
+	let g = GraphMaster9000;
+	let _previousNode = undefined;
+	let _currentNode = 'start';
+	let _discoveredNodes = new Set(['start', 'end']);
+	let _tickCounter = 0;
+
+	class GameState {
+		constructor() {}
+		get previousNode() {
+			return _previousNode;
+		}
+		get currentNode() {
+			return _currentNode;
+		}
+		get discoveredNodes() {
+			return _discoveredNodes;
+		}
+		get tickCounter() {
+			return _tickCounter;
+		}
+	}
+	return new GameState()
 }());
 
 
 
 
 
-let container = document.querySelector('#mynetwork');
-let options = {
-    layout: {
-        hierarchical: {
-            enabled: true,
-            treeSpacing: 1,
-            nodeSpacing: 1,
-            parentCentralization: true,
-        }
-    },
-    nodes: {
-        shape: 'circle',
-    },
-};
 
-let myNetwork = new vis.Network(container,{},options);
-let g = GraphMaster9000;
-console.log(g)
-let updateGraph = ()=>{
-    myNetwork.setData(g.dataForVis);
-    myNetwork.setOptions(options);
-}
-updateGraph()
+var gamedisplay = (function() {
+	let options = {
+		height: '100%',
+  		width: '100%',
+		layout: {
+			hierarchical: {
+				enabled: false,
+			},
+		},
+	    nodes: {
+	        shape: 'circle',
+	    },
+	    edges: {
+	    	arrows: {
+				to: {
+					enabled: true,
+					type: 'arrow',
+				},
+			},
+	    },
+	};
 
-let addRandomPath = ()=>{
-    g.createSinglePath(g.nodeTable, g.edgeChart);
-    updateGraph();
-}
-let changeView = ()=>{
-    if (options.layout.hierarchical.enabled === true) {
-        options.layout.hierarchical.enabled = false;
-        myNetwork.setOptions(options);
-        return;
-    } else {
-        options.layout.hierarchical.enabled = true;
-    }
-    updateGraph();
-}
+	let g = GraphMaster9000;
+
+	let myNetwork = new vis.Network(
+		document.querySelector('#mynetwork'),
+		{},
+		options,
+	);
+
+	let changeView = ()=>{
+	    if (options.layout.hierarchical.enabled === true) {
+	        options.layout.hierarchical.enabled = false;
+	    } else {
+	        options.layout.hierarchical.enabled = true;
+	    }
+	    updateGraph();
+	}
+
+	let updateGraph = ()=>{
+	    myNetwork.setData(g.dataForVis);
+	    myNetwork.setOptions(options);
+	}
+
+	updateGraph();
+	// changeView();
+
+
+	let showFullMap = ()=> {
+
+	}
+	document.querySelector('#ButtonShowFullMap').addEventListener('click', showFullMap);
+}());
 
 
 
-document.querySelector('#ButtonAddPath').addEventListener('click', addRandomPath);
-document.querySelector('#ButtonChangeView').addEventListener('click', changeView);
 
-document.addEventListener('load', ()=>{
-});
+console.log(GraphMaster9000);
+console.log(gamestate);
