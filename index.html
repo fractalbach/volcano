@@ -13,15 +13,15 @@
             <div id="wrapTitle">
                 <h1 id="title">Random Volcano Dungeon as a Graph</h1>
             </div>
-            <div id="wrapGraph" class="middleOverlay">
-                <div id="mynetwork"></div>
+            <div id="overlayUniverse">
+                <div id="wrapGraph" class="middleOverlay">
+                    <div id="mynetwork"></div>
+                </div>
+                <div id="menuOverlay" class="middleOverlay hidden">Hello there! This is the Volcano Game Menu!</div>
             </div>
             <div id="wrapControls">
-                <div class="controlButton" id="ButtonShowMenu">Show Menu</div>
-                <div class="controlButton" id="ButtonShowFullMap">Show Full Map</div>
+                <div tabindex=0 role="button" class="controlButton" id="ButtonShowMenu">Show Menu</div>
             </div>
-        </div>
-        <div id="menuOverlay" class="middleOverlay" style="display:none;">Hello there! This is the Volcano Game Menu!
         </div>
         <style type="text/css">
             html, body, #wholescreen {
@@ -62,6 +62,10 @@
                 padding: 20%;
             }
 
+            .hidden {
+                display: none;
+            }
+
             .controlButton {
                 text-align: center;
                 cursor: pointer;
@@ -75,7 +79,7 @@
                 border: 1px solid rgb(67, 17, 76);
                 box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.7);
                 -webkit-tap-highlight-color: rgba(0,0,0,0);
-                outline: none;
+                /* outline: none; */
                 -webkit-transition-duration: 0.5s;
                 transition-duration: 0.5s;
             }
@@ -88,6 +92,11 @@
                 border-style: inset;
                 background: lightgreen;
                 box-shadow: inset 1px 2px 2px 0px rgba(0, 0, 0, 0.7);
+            }
+
+            .ActivatedButton {
+                background: purple;
+                color: white;
             }
 
             @media (orientation: portrait) {
@@ -167,16 +176,7 @@
             document.addEventListener("touchstart", function() {}, true);
 
             //overlay test.
-            document.querySelector('#ButtonShowMenu').addEventListener('click', ()=>{
-                let ele = document.querySelector('#menuOverlay')
-                if (ele.style.display !== 'none') {
-                    ele.style.display = 'none';
-                } else {
-                    ele.style.display = 'block';
-                }
 
-            }
-            );
         </script>
     </body>
 </html>
