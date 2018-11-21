@@ -126,6 +126,15 @@ var GraphGenerator = (function() {
 		createSinglePath() {
 			createSinglePath(this.nodeMatrix, this.edgeSetMap);
 		}
+
+		getAdjacentNodes(nodeid) {
+			return this.edgeSetMap.get(nodeid);
+		}
+
+		get adjacencyList() {
+			return this.edgeSetMap
+		}
+
 		get dataForVis() {
 			_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
 			return _dataForVis;
@@ -134,30 +143,139 @@ var GraphGenerator = (function() {
 	return new GraphGenerator()
 }());
 
-var gamestate = (function(){
+
+
+/*
+	GraphExplorer 
+
+		GraphExplorer is your trusty navigation map. You update it as you move
+		through the volcano.  Noticing passageways, you mark unexplored rooms.
+		As you explore those rooms, you document the connections between them,
+		slowly but surely building up a graph of the volcano.
+
+
+	Unknown Nodes
+
+		Unknown nodes are special.  After you 'solve' a node, then you become
+		aware of its edges (aka passage-ways).  You don't know what lies beyond
+		that passage, you just know that it leads _somewhere_.
+
+		For example, you follow a path to an unknown room.  You get there
+		and realize that you've seen it already!  On your map, you notice you have 
+		2 unknown nodes: but they are actually the same place!
+
+		Thus, unknown nodes are special: 2 unknown nodes in the PartialGraph CAN 
+		represent the exact same node in the FullGraph.
+
+	
+	Discovered Nodes
+
+		When you first enter begin to enter an unknown room, you "discover it".
+		You become aware of its name, and if you've seen the room before.
+		However, that doesn't necesarily mean you have _solved_ it.
+
+		rooms that are Discovered, but Not Solved, will not reveal all of their
+		edges to you.   It is assumed that you have no fully entered the room,
+		but you are only peering at it through the passageway.  It's enough to
+		know whether you have been there before, but not enough to see all 
+		of the other passageways.
+
+
+	Solved Nodes
+	
+		Solved nodes are where all nodes tend to end up.  Once you have solved
+		a room, it means you have identified all of the other passageways in 
+		that room.  You may not know where they lead yet, but you know that they
+		exist.
+
+*/
+let GraphExplorer = (function(){
 
 	let g = GraphGenerator;
-	let _previousNode = undefined;
-	let _currentNode = 'start';
-	let _discoveredNodes = new Set(['start', 'end']);
-	let _tickCounter = 0;
+	let currentNode = 'start';
+	let previousNode = 'start';
 
-	class GameState {
-		constructor() {}
-		get previousNode() {
-			return _previousNode;
-		}
-		get currentNode() {
-			return _currentNode;
-		}
-		get discoveredNodes() {
-			return _discoveredNodes;
-		}
-		get tickCounter() {
-			return _tickCounter;
-		}
+	let adjMatrix = GraphGenerator.adjacencyMatrix
+	// let unknown;
+	// let discovered;
+	// let solved;
+
+	let discoveredNodes = new Set(['start', 'end']);
+	let solvedNodes = new Set();
+
+	let unidNodeMap = new Map();
+	let unidNameCounter = 0;
+
+	function unite(setA, setB) {
+		return new Set([...setA, ...setB])
 	}
-	return new GameState()
+
+
+
+
+	function revealRoom(fakeId) {
+		if (!unidNodeMap.has(fakeId)) {
+			console.warn(`can't reveal '${fakeId}'. not found in map.`);
+			return false;
+		}
+		let realId = unidNodeMap.get(fakeId);
+		unidNodeMap.delete(fakeId);
+
+		if (solvedNodes.has(realId)) {
+			// todo
+			// reconnect the edges.
+		}
+		// do something with realId
+
+		return true;
+	}
+
+	function addToUnids(nodeId) {
+		// generate a new fake name.
+		unidNameCounter++;
+		let fakeName = `Unknown Room ${unidNameCounter}`;
+		unidNodeMap.add(fakeName, nodeId);
+	}
+
+
+	function gotoNode(nodeId) {
+		if (unidNodeMap.has(nodeId) === true) {
+			// get real name.
+			// reveal room.
+			// fallthrough.
+		}
+		if (discoveredNodes.has(nodeId) === true) {
+			previousNode = currentNode;
+			currentNode = nodeId;
+			return true;
+		}
+		console.warn(`can't find node: '${nodeId}' in set of discovered nodes.`)
+		return false;
+	}
+
+	function solveNode(nodeId) {
+		let nearbyNodes = getNodesConnectedTo(nodeId);
+		for (let n of nearbyNodes) {
+			addToUnids(n.id)
+		}
+
+		// unite()
+		// solvedNodes.add(nodeId);
+	}
+
+	// initialize:
+	solveNode('start');
+
+	return {
+		solveNode,
+		gotoNode,
+	}
+}())
+
+var gamestate = (function(){
+
+	let g = GraphExplorer;
+
 }());
 
 
