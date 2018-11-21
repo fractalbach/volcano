@@ -34,6 +34,7 @@
             </div>
 
             <div id="wrapControls">
+                <div tabindex=0 role="button" class="controlButton" id="reloadbutton">Reload Graph</div>
                 <div tabindex=0 role="button" class="controlButton" id="buttonShowMenu">Show Menu</div>
                 <div tabindex=0 role="button" class="controlButton" id="buttonItems">Items</div>
             </div>
@@ -51,6 +52,11 @@
         <script type="text/javascript">
             // Fix for allowing mobile safari to have touch effeects.
             document.addEventListener("touchstart", function() {}, true);
+
+            // temporary reload button for testing graphs.
+            document.querySelector('#reloadbutton').addEventListener('click', ()=>{
+                location.reload(true);
+            })
         </script>
     </body>
 </html>

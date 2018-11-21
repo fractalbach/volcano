@@ -15,11 +15,18 @@
 	        shape: 'circle',
 	    },
 	    edges: {
+			smooth: {
+				enabled: true,
+				type: 'dynamic',
+	    		roundness: 0.1,
+			},
 	    	arrows: {
 				to: {
-					enabled: true,
+					enabled: false,
 					type: 'arrow',
 				},
+				from: {
+				}
 			},
 	    },
 	};
@@ -32,7 +39,7 @@
 		options,
 	);
 
-	/*
+	
 	let changeView = ()=>{
 	    if (options.layout.hierarchical.enabled === true) {
 	        options.layout.hierarchical.enabled = false;
@@ -41,13 +48,14 @@
 	    }
 	    updateGraph();
 	}
-	*/
+	
 
 	let updateGraph = ()=>{
 	    myNetwork.setData(g.dataForVis);
 	    myNetwork.setOptions(options);
 	}
 
+	// changeView();
 	updateGraph();
 	// changeView();
 

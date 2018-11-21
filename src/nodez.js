@@ -113,10 +113,13 @@ var GraphGenerator = (function() {
 
 	let _dataForVis;
 	let nPaths = 5;
+	let nLevels = 7;
+	let minNodes = 2;
+	let maxNodes = 6;
 
 	class GraphGenerator {
 		constructor() {
-			this.nodeMatrix = makeTable(8, 5, 10);
+			this.nodeMatrix = makeTable(nLevels, minNodes, maxNodes);
 			this.edgeSetMap = makeEdgeChart(this.nodeMatrix);
 			for (let i = 0; i < nPaths; i++) {
 				createSinglePath(this.nodeMatrix, this.edgeSetMap);
@@ -253,7 +256,7 @@ let GraphExplorer = (function(){
 
 
 	function solve(node) {
-		
+
 	}
 
 
