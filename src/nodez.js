@@ -191,84 +191,130 @@ var GraphGenerator = (function() {
 */
 let GraphExplorer = (function(){
 
-	let g = GraphGenerator;
 	let currentNode = 'start';
 	let previousNode = 'start';
 
-	let adjMatrix = GraphGenerator.adjacencyMatrix
-	// let unknown;
-	// let discovered;
-	// let solved;
+	let fullGraph =  GraphGenerator.adjacencyMatrix;
+	let discovered = new Map();
+	let unids = new Map();
 
-	let discoveredNodes = new Set(['start', 'end']);
-	let solvedNodes = new Set();
-
-	let unidNodeMap = new Map();
-	let unidNameCounter = 0;
 
 	function unite(setA, setB) {
 		return new Set([...setA, ...setB])
 	}
 
-
-
-
-	function revealRoom(fakeId) {
-		if (!unidNodeMap.has(fakeId)) {
-			console.warn(`can't reveal '${fakeId}'. not found in map.`);
+	function areSetsEqual(setA, setB) {
+		if (setA.size !== setB.size) {
 			return false;
 		}
-		let realId = unidNodeMap.get(fakeId);
-		unidNodeMap.delete(fakeId);
-
-		if (solvedNodes.has(realId)) {
-			// todo
-			// reconnect the edges.
+		for (let a of SetA) {
+			if (!setB.has(a)) {
+				return false;
+			}
 		}
-		// do something with realId
-
 		return true;
 	}
 
-	function addToUnids(nodeId) {
-		// generate a new fake name.
-		unidNameCounter++;
-		let fakeName = `Unknown Room ${unidNameCounter}`;
-		unidNodeMap.add(fakeName, nodeId);
+	function discover(unidNode) {
+		if (!unids.has(unidNode)) {
+			console.warn(`can't discover '${unidNode}': not in unids.`);
+			return;
+		}
+		let realNode = unids.get(unidNode);
+		unids.delete(unidNode);
+
+		// replaceAll: fakeNode -> realNode
+		for (let [k,v] of discovered.entries()) {
+			// replace value
+			if (v.has(unidNode)) {
+				v.delete(unidNode);
+				v.add(realNode);
+			}
+			// replace key
+			if (k === unidNode) {
+				let setA = v;
+				discovered.delete(k);
+				if (discovered.has(realNode)) {
+					let setB = discovered.get(realNode);
+					let setC = unite(setA, setB);
+					discovered.set(realNode, setC);
+					// check to see if our discovery results in further discovery.
+					for (let [otherFake, otherReal] of unids.entries()) {
+						if (setA.has(otherReal)) {
+							discover(otherFake);
+						}
+					}
+				} else {
+					discovered.set(realNode, setA);
+				}
+			}
+		}
 	}
 
 
-	function gotoNode(nodeId) {
-		if (unidNodeMap.has(nodeId) === true) {
-			// get real name.
-			// reveal room.
-			// fallthrough.
-		}
-		if (discoveredNodes.has(nodeId) === true) {
-			previousNode = currentNode;
-			currentNode = nodeId;
-			return true;
-		}
-		console.warn(`can't find node: '${nodeId}' in set of discovered nodes.`)
-		return false;
+	function solve(node) {
+		
 	}
 
-	function solveNode(nodeId) {
-		let nearbyNodes = getNodesConnectedTo(nodeId);
-		for (let n of nearbyNodes) {
-			addToUnids(n.id)
-		}
 
-		// unite()
-		// solvedNodes.add(nodeId);
-	}
 
-	// initialize:
-	solveNode('start');
+
+	// function revealRoom(fakeId) {
+	// 	if (!unidNodeMap.has(fakeId)) {
+	// 		console.warn(`can't reveal '${fakeId}'. not found in map.`);
+	// 		return false;
+	// 	}
+	// 	let realId = unidNodeMap.get(fakeId);
+	// 	unidNodeMap.delete(fakeId);
+
+	// 	if (solvedNodes.has(realId)) {
+	// 		// todo
+	// 		// reconnect the edges.
+	// 	}
+	// 	// do something with realId
+
+	// 	return true;
+	// }
+
+	// function addToUnids(nodeId) {
+	// 	// generate a new fake name.
+	// 	unidNameCounter++;
+	// 	let fakeName = `Unknown Room ${unidNameCounter}`;
+	// 	unidNodeMap.add(fakeName, nodeId);
+	// }
+
+
+	// function gotoNode(nodeId) {
+	// 	if (unidNodeMap.has(nodeId) === true) {
+	// 		// get real name.
+	// 		// reveal room.
+	// 		// fallthrough.
+	// 	}
+	// 	if (discoveredNodes.has(nodeId) === true) {
+	// 		previousNode = currentNode;
+	// 		currentNode = nodeId;
+	// 		return true;
+	// 	}
+	// 	console.warn(`can't find node: '${nodeId}' in set of discovered nodes.`)
+	// 	return false;
+	// }
+
+	// function solveNode(nodeId) {
+	// 	let nearbyNodes = getNodesConnectedTo(nodeId);
+	// 	for (let n of nearbyNodes) {
+	// 		addToUnids(n.id)
+	// 	}
+
+	// 	// unite()
+	// 	// solvedNodes.add(nodeId);
+	// }
+
+	// // initialize:
+	// solveNode('start');
 
 	return {
-		solveNode,
-		gotoNode,
+		discover,
+		solve,
 	}
 }())
 
