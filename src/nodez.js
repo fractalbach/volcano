@@ -1,3 +1,26 @@
+/*
+	GraphGenerator
+
+		The GraphGenerator is the mechanism that creates volcano maps!
+		When a game is started, a graph is randomly generated using the
+		algorithms contained in this generator.  This graph remains
+		"hidden" from view, and the player explores the it, attempting
+		to find the exit!
+
+	Generation Algorithm
+
+		Currently, the way the graph is generated is by setting up a 
+		level-based tree of some height _h_.  "Start" is level 0,
+		and the "finish" is level _h_.  Each level in between is given
+		a random number of nodes.  Then, a path is drawn from start to
+		finish, passing through each level.  DrawSinglePath() function
+		is called several times, and then all "free" nodes are 
+		discarded.
+
+		The result looks something like a pretzel!  (depending on 
+		what the intiial values are.)
+
+*/
 var GraphGenerator = (function() {
 
 	let node = (id, level)=> {
@@ -194,32 +217,32 @@ var GraphGenerator = (function() {
 */
 let GraphExplorer = (function(){
 
+	// current and previous nodes record your position.
 	let currentNode = 'start';
 	let previousNode = 'start';
 
-	let fullGraph =  GraphGenerator.adjacencyMatrix;
+	// discovered and unids record your exploration through the volcano.
+	let fullGraph =  GraphGenerator.adjacencyList;
 	let discovered = new Map();
 	let unids = new Map();
+
+	// unidPrefix used for display names of the unknown rooms.
+	let unidPrefix = 'unknown ';
+
+
+	function init() {
+		discovered.set('start', new Set());
+		discovered.set('end', new Set());
+		solve('start')
+	}
 
 
 	function unite(setA, setB) {
 		return new Set([...setA, ...setB])
 	}
 
-	function areSetsEqual(setA, setB) {
-		if (setA.size !== setB.size) {
-			return false;
-		}
-		for (let a of SetA) {
-			if (!setB.has(a)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	function discover(unidNode) {
-		if (!unids.has(unidNode)) {
+		if (unids.has(unidNode) !== true) {
 			console.warn(`can't discover '${unidNode}': not in unids.`);
 			return;
 		}
@@ -254,81 +277,74 @@ let GraphExplorer = (function(){
 		}
 	}
 
-
-	function solve(node) {
-
+	function solve(node, previousNode) {
+		if (!discovered.has(node)) {
+			console.warn(`can't solve '${node}'; hasn't been discovered.`);
+			return;
+		}
+		for (let realNode of fullGraph.get(node)) {
+			if (realNode !== previousNode) {
+				let fakeNode = nextFakeKey();
+				unids.set(fakeNode, realNode);
+				discovered.get(node).add(fakeNode);
+				discovered.set(fakeNode, new Set([node]));
+			}
+		}
 	}
 
-
-
-
-	// function revealRoom(fakeId) {
-	// 	if (!unidNodeMap.has(fakeId)) {
-	// 		console.warn(`can't reveal '${fakeId}'. not found in map.`);
-	// 		return false;
-	// 	}
-	// 	let realId = unidNodeMap.get(fakeId);
-	// 	unidNodeMap.delete(fakeId);
-
-	// 	if (solvedNodes.has(realId)) {
-	// 		// todo
-	// 		// reconnect the edges.
-	// 	}
-	// 	// do something with realId
-
-	// 	return true;
-	// }
-
-	// function addToUnids(nodeId) {
-	// 	// generate a new fake name.
-	// 	unidNameCounter++;
-	// 	let fakeName = `Unknown Room ${unidNameCounter}`;
-	// 	unidNodeMap.add(fakeName, nodeId);
-	// }
-
-
-	// function gotoNode(nodeId) {
-	// 	if (unidNodeMap.has(nodeId) === true) {
-	// 		// get real name.
-	// 		// reveal room.
-	// 		// fallthrough.
-	// 	}
-	// 	if (discoveredNodes.has(nodeId) === true) {
-	// 		previousNode = currentNode;
-	// 		currentNode = nodeId;
-	// 		return true;
-	// 	}
-	// 	console.warn(`can't find node: '${nodeId}' in set of discovered nodes.`)
-	// 	return false;
-	// }
-
-	// function solveNode(nodeId) {
-	// 	let nearbyNodes = getNodesConnectedTo(nodeId);
-	// 	for (let n of nearbyNodes) {
-	// 		addToUnids(n.id)
-	// 	}
-
-	// 	// unite()
-	// 	// solvedNodes.add(nodeId);
-	// }
-
-	// // initialize:
-	// solveNode('start');
-
-	return {
-		discover,
-		solve,
+	function nextFakeKey() {
+		let index = 1;
+		let key = unidPrefix + index;
+		while (unids.has(key)) {
+			index++;
+			key = unidPrefix + index;
+		}
+		return key;
 	}
+
+	class GraphExplorer {
+		constructor() {
+			this.fullGraph = fullGraph;
+			this.discovered = discovered;
+			this.unids = unids;
+			init();
+		}
+		discover(unidNode) {
+			discover(unidNode)
+		}
+		solve(node, previousNode) {
+			solve(node, previousNode)
+		}
+	}
+	
+
+	// returns functions through closure
+	return new GraphExplorer();
 }())
 
+
+
+
+
 var gamestate = (function(){
-
-	let g = GraphExplorer;
-
 }());
 
 
-
-
+let g = GraphExplorer;
 console.log(GraphGenerator);
 console.log(gamestate);
+
+
+
+
+	// function areSetsEqual(setA, setB) {
+	// 	if (setA.size !== setB.size) {
+	// 		return false;
+	// 	}
+	// 	for (let a of SetA) {
+	// 		if (!setB.has(a)) {
+	// 			return false;
+	// 		}
+	// 	}
+	// 	return true;
+	// }
