@@ -6,9 +6,15 @@ html, body, #wholescreen {
     right: 0;
 }
 
+h2 {
+    text-align: center;
+}
+
 .middleOverlay {
     background: white;
     border: solid 1px lightgray;
+    padding: 0.5em;
+    padding-top: 0;
 }
 
 #wrapTitle {
@@ -19,12 +25,11 @@ html, body, #wholescreen {
     white-space: nowrap;
 }
 
-#wrapGraph {
+.wrapGraph {
     overflow: hidden;
-    padding: 0.5em;
 }
 
-#mynetwork {
+#mynetwork, #myExploredNetwork {
     border: 1px solid lightgray;
     width: 100%;
     height: 100%;

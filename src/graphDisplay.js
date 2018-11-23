@@ -32,8 +32,22 @@
 		myNetwork.setData(d);
 		myNetwork.setOptions(options);
 	}
-
 	updateGraph();
+
+
+	let myExploredNetwork = new vis.Network(
+		document.querySelector('#myExploredNetwork'),
+		{},
+		options,
+	);
+
+	const updateExploredGraph = ()=>{
+		let d = dataConverter.convertListToVis(GraphExplorer.discovered);
+		d.edges = dataConverter.removeDuplicateEdges(d.edges);
+		myExploredNetwork.setData(d);
+		myExploredNetwork.setOptions(options);
+	}
+	updateExploredGraph();
 
 }());
 

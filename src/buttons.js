@@ -9,7 +9,8 @@
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
 		['#buttonShowMenu', '#overlayMenu', 'Show Menu', 'Hide Menu'],
-		['#buttonItems', '#overlayItems', 'Items', 'Items'],
+		['#buttonItems', '#overlayItems', 'Show Items', 'Hide Items'],
+		['#buttonExplore', '#overlayExplore', 'Show Explored Graph', 'Hide Explored Graph']
 	]
 
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.
