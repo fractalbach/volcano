@@ -10,6 +10,16 @@ h2 {
     text-align: center;
 }
 
+section {
+    overflow: auto;
+    max-width: 50em;
+    max-height: calc(100% - 4em);
+    background: #f5f5ff;
+    border: solid 1px lightgray;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
 .middleOverlay {
     background: white;
     border: solid 1px lightgray;
@@ -32,7 +42,7 @@ h2 {
 #mynetwork, #myExploredNetwork {
     border: 1px solid lightgray;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 4em);
 }
 
 #wrapControls {
@@ -46,8 +56,13 @@ h2 {
     padding: 20%;
 }
 
+#overlay-default {
+    z-index: -1;
+}
+
 .hidden {
-    display: none;
+    z-index: -100;
+    /*display: none;*/
 }
 
 .controlButton {

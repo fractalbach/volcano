@@ -31,6 +31,7 @@
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
 		myNetwork.setData(d);
 		myNetwork.setOptions(options);
+		myNetwork.fit();
 	}
 	updateGraph();
 
@@ -46,6 +47,7 @@
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
 		myExploredNetwork.setData(d);
 		myExploredNetwork.setOptions(options);
+		myExploredNetwork.fit();
 	}
 	updateExploredGraph();
 

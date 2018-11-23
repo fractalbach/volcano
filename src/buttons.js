@@ -8,9 +8,10 @@
 	// This structure is exactly the same as the arguments for 
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
-		['#buttonShowMenu', '#overlayMenu', 'Show Menu', 'Hide Menu'],
-		['#buttonItems', '#overlayItems', 'Show Items', 'Hide Items'],
-		['#buttonExplore', '#overlayExplore', 'Show Explored Graph', 'Hide Explored Graph']
+		['#button-Explore',  '#overlay-Explore', 'Show Map',      'Hide Map'],
+		['#button-ShowMenu', '#overlay-Menu',    'Show Menu',     'Hide Menu'],
+		['#button-Items',    '#overlay-Items',   'Show Items',    'Hide Items'],
+		['#button-FullMap',  '#overlay-FullMap', 'Show Full Map', 'Hide Full Map']
 	]
 
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.
@@ -51,7 +52,8 @@
 
 	let toggleHandler = (n)=> {
 		if (n === currentlyEnabled) {
-			currentlyEnabled = -1;	
+			// return;
+			currentlyEnabled = -1;
 		} else {
 			currentlyEnabled = n;
 		}
