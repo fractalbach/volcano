@@ -51,6 +51,11 @@
 	}
 	updateExploredGraph();
 
+	window.addEventListener('resize', ()=> {
+		myNetwork.fit();
+		myExploredNetwork.fit();
+	})
+
 }());
 
 

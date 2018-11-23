@@ -8,10 +8,10 @@
 	// This structure is exactly the same as the arguments for 
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
-		['#button-Explore',  '#overlay-Explore', 'Show Map',      'Hide Map'],
-		['#button-ShowMenu', '#overlay-Menu',    'Show Menu',     'Hide Menu'],
-		['#button-Items',    '#overlay-Items',   'Show Items',    'Hide Items'],
-		['#button-FullMap',  '#overlay-FullMap', 'Show Full Map', 'Hide Full Map']
+		['#button-Explore',  '#overlay-Explore', 'Map',      'Hide Map'],
+		['#button-ShowMenu', '#overlay-Menu',    'Menu',     'Hide Menu'],
+		['#button-Items',    '#overlay-Items',   'Items',    'Hide Items'],
+		['#button-FullMap',  '#overlay-FullMap', 'Secret Map', 'Hide Secret Map']
 	]
 
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.

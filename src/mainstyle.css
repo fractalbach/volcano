@@ -6,7 +6,7 @@ html, body, #wholescreen {
     right: 0;
 }
 
-h2 {
+h1, h2 {
     text-align: center;
 }
 
@@ -22,7 +22,7 @@ section {
 
 .middleOverlay {
     background: white;
-    border: solid 1px lightgray;
+    /*border: solid 1px lightgray;*/
     padding: 0.5em;
     padding-top: 0;
 }
@@ -37,12 +37,13 @@ section {
 
 .wrapGraph {
     overflow: hidden;
+    padding: 1em;
 }
 
 #mynetwork, #myExploredNetwork {
     border: 1px solid lightgray;
     width: 100%;
-    height: calc(100% - 4em);
+    height: 100%;
 }
 
 #wrapControls {
@@ -83,8 +84,9 @@ section {
     /*transition-duration: 0.5s;*/
 }
 
-.controlButton:focus {
+.controlButton:focus, .controlButton:selected {
     border: 1px solid rgb(67, 17, 76);
+    outline: 1px solid rgb(67, 17, 76);
 }
 
 .controlButton:active {
