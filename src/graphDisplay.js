@@ -5,30 +5,17 @@
 
 	let options = {
 		height: '100%',
-  		width: '100%',
-		layout: {
-			hierarchical: {
-				enabled: false,
-			},
+		width: '100%',
+		nodes: {
+			shape: 'circle',
 		},
-	    nodes: {
-	        shape: 'circle',
-	    },
-	    edges: {
+		edges: {
 			smooth: {
 				enabled: true,
 				type: 'dynamic',
-	    		roundness: 0.1,
+				roundness: 0.1,
 			},
-	    	arrows: {
-				to: {
-					enabled: false,
-					type: 'arrow',
-				},
-				from: {
-				}
-			},
-	    },
+		},
 	};
 
 	let g = GraphGenerator;
@@ -39,24 +26,24 @@
 		options,
 	);
 
-	
-	let changeView = ()=>{
-	    if (options.layout.hierarchical.enabled === true) {
-	        options.layout.hierarchical.enabled = false;
-	    } else {
-	        options.layout.hierarchical.enabled = true;
-	    }
-	    updateGraph();
-	}
-	
-
-	let updateGraph = ()=>{
-	    myNetwork.setData(g.dataForVis);
-	    myNetwork.setOptions(options);
+	const updateGraph = ()=>{
+		let d = dataConverter.convertListToVis(g.adjacencyList);
+		d.edges = dataConverter.removeDuplicateEdges(d.edges);
+		myNetwork.setData(d);
+		myNetwork.setOptions(options);
 	}
 
-	// changeView();
 	updateGraph();
-	// changeView();
 
+}());
+
+
+
+// _________________________________________
+//  Other Tests Go Here
+// =========================================
+(function() {
+
+	console.log(GraphExplorer);
+	
 }());

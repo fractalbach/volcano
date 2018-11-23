@@ -1,14 +1,13 @@
 /*
 	GraphGenerator
-
 		The GraphGenerator is the mechanism that creates volcano maps!
 		When a game is started, a graph is randomly generated using the
 		algorithms contained in this generator.  This graph remains
 		"hidden" from view, and the player explores the it, attempting
 		to find the exit!
 
-	Generation Algorithm
 
+	Generation Algorithm
 		Currently, the way the graph is generated is by setting up a 
 		level-based tree of some height _h_.  "Start" is level 0,
 		and the "finish" is level _h_.  Each level in between is given
@@ -16,10 +15,6 @@
 		finish, passing through each level.  DrawSinglePath() function
 		is called several times, and then all "free" nodes are 
 		discarded.
-
-		The result looks something like a pretzel!  (depending on 
-		what the intiial values are.)
-
 */
 var GraphGenerator = (function() {
 
@@ -29,25 +24,25 @@ var GraphGenerator = (function() {
 
 	let makeStartNode = ()=> {
 		let n = node('start', 0);
-		n['shape'] = 'star';
-		n['color'] = 'green';
+		// n['shape'] = 'hexagon';
+		// n['color'] = 'green';
 		return n;
 	}
 
 	let makeFinalNode = (level)=> {
-		let n = node('end', level);
-		n['shape'] = 'star';
-		n['color'] = 'orange';
+		let n = node('finish', level);
+		// n['shape'] = 'star';
+		// n['color'] = 'orange';
 		return n;
 	}
 
-	let edgeDataItem = (from, to)=> {
-		return {'from': from, 'to': to};
-	}
+	// let edgeDataItem = (from, to)=> {
+	// 	return {'from': from, 'to': to};
+	// }
 
 	let randint = (min, max)=> {
-	  	min = Math.ceil(min);
-	  	max = Math.floor(max);
+		min = Math.ceil(min);
+		max = Math.floor(max);
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
@@ -105,36 +100,36 @@ var GraphGenerator = (function() {
 	converts the list of nodes and edges into a structure that can
 	be used for vis.js to display the graph.
 	*/
-	let generateVisData = (nodeTable, edgeChart)=> {
-		let data = {
-			"nodes": [],
-			"edges": [],
-		}
-		for (let [i, row] of Object.entries(nodeTable)) {
-			for (let [j, node] of Object.entries(row)) {
-				if (typeof node === 'undefined') {
-					continue
-				}
-				if (edgeChart.has(node.id) === false) {
-					continue
-				}
-				if (edgeChart.get(node.id).size > 0) {
-					data.nodes.push(node);
-				}
-			}
-		}
-		for (let [node, edgeSet] of edgeChart.entries()) {
-			if (edgeSet.size > 0) {
-				for (let nodeTarget of edgeSet.values()) {
-					data.edges.push(edgeDataItem(node, nodeTarget));
-				}
-			}
-		}
-		return data
-	}
+	// let generateVisData = (nodeTable, edgeChart)=> {
+	// 	let data = {
+	// 		"nodes": [],
+	// 		"edges": [],
+	// 	}
+	// 	for (let [i, row] of Object.entries(nodeTable)) {
+	// 		for (let [j, node] of Object.entries(row)) {
+	// 			if (typeof node === 'undefined') {
+	// 				continue
+	// 			}
+	// 			if (edgeChart.has(node.id) === false) {
+	// 				continue
+	// 			}
+	// 			if (edgeChart.get(node.id).size > 0) {
+	// 				data.nodes.push(node);
+	// 			}
+	// 		}
+	// 	}
+	// 	for (let [node, edgeSet] of edgeChart.entries()) {
+	// 		if (edgeSet.size > 0) {
+	// 			for (let nodeTarget of edgeSet.values()) {
+	// 				data.edges.push(edgeDataItem(node, nodeTarget));
+	// 			}
+	// 		}
+	// 	}
+	// 	return data
+	// }
 
 
-	let _dataForVis;
+	// let _dataForVis;
 	let nPaths = 5;
 	let nLevels = 7;
 	let minNodes = 2;
@@ -147,7 +142,7 @@ var GraphGenerator = (function() {
 			for (let i = 0; i < nPaths; i++) {
 				createSinglePath(this.nodeMatrix, this.edgeSetMap);
 			}
-			_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
+			// _dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
 		}
 		createSinglePath() {
 			createSinglePath(this.nodeMatrix, this.edgeSetMap);
@@ -161,10 +156,10 @@ var GraphGenerator = (function() {
 			return this.edgeSetMap
 		}
 
-		get dataForVis() {
-			_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
-			return _dataForVis;
-		}
+		// get dataForVis() {
+		// 	_dataForVis = generateVisData(this.nodeMatrix, this.edgeSetMap);
+		// 	return _dataForVis;
+		// }
 	}
 	return new GraphGenerator()
 }());
@@ -324,27 +319,82 @@ let GraphExplorer = (function(){
 
 
 
+/*
+	dataConverter is used to convert the adjacency lists into data that is
+	useful to vis.js in order to render the graphs.
+*/
+const dataConverter = (function(){
 
+	const makeNode = (id)=> {
+		switch (id) {
+		case 'start':
+			return {
+				'id':     id, 
+				'label':  id,
+				'shape': 'hexagon',
+				'color': 'green',
+			};
+		case 'finish':
+			return {
+				'id':     id, 
+				'label':  id,
+				'shape': 'star',
+				'color': 'orange',
+			}
+		}
+		return {
+			'id':id, 
+			'label':id
+		};
+	}
 
-var gamestate = (function(){
+	const makeEdge = (from, to)=> {
+		return {
+			from: from, 
+			to: to,
+		};
+	}
+
+	const convertListToVis = (adjList)=> {
+		let nodes = [];
+		let edges = [];
+		for (let [k, v] of adjList) {
+			if (v.size <= 0) {continue;} // filter out free nodes.
+			nodes.push(makeNode(k));
+			for (let n of v.values()) {
+				edges.push(makeEdge(k, n));
+			}
+		}
+		let data = {
+			nodes: nodes,
+			edges: edges,
+		};
+		return data;
+	}
+
+	const removeDuplicateEdges = (visEdges)=> {
+		let edges = [];
+		let max = visEdges.length - 1;
+		let ok = true;
+		for (let x of visEdges) {
+			for (let y of edges) {
+				if ((x['from'] === y['to']) && (x['to'] === y['from'])) {
+					ok = false;
+					break;
+				}
+			}
+			if (ok === true) {
+				edges.push(x);
+			}
+			ok = true;
+		}
+		return edges;
+	}
+
+	return {
+		convertListToVis,
+		removeDuplicateEdges,
+	}
 }());
 
 
-let g = GraphExplorer;
-console.log(GraphGenerator);
-console.log(gamestate);
-
-
-
-
-	// function areSetsEqual(setA, setB) {
-	// 	if (setA.size !== setB.size) {
-	// 		return false;
-	// 	}
-	// 	for (let a of SetA) {
-	// 		if (!setB.has(a)) {
-	// 			return false;
-	// 		}
-	// 	}
-	// 	return true;
-	// }
