@@ -8,12 +8,12 @@
 
 
 	Generation Algorithm
-		Currently, the way the graph is generated is by setting up a 
+		Currently, the way the graph is generated is by setting up a
 		level-based tree of some height _h_.  "Start" is level 0,
 		and the "finish" is level _h_.  Each level in between is given
 		a random number of nodes.  Then, a path is drawn from start to
 		finish, passing through each level.  DrawSinglePath() function
-		is called several times, and then all "free" nodes are 
+		is called several times, and then all "free" nodes are
 		discarded.
 */
 var GraphGenerator = (function() {
@@ -96,7 +96,7 @@ var GraphGenerator = (function() {
 		}
 	}
 
-	/* 
+	/*
 	converts the list of nodes and edges into a structure that can
 	be used for vis.js to display the graph.
 	*/
@@ -167,7 +167,7 @@ var GraphGenerator = (function() {
 
 
 /*
-	GraphExplorer 
+	GraphExplorer
 
 		GraphExplorer is your trusty navigation map. You update it as you move
 		through the volcano.  Noticing passageways, you mark unexplored rooms.
@@ -182,13 +182,13 @@ var GraphGenerator = (function() {
 		that passage, you just know that it leads _somewhere_.
 
 		For example, you follow a path to an unknown room.  You get there
-		and realize that you've seen it already!  On your map, you notice you have 
+		and realize that you've seen it already!  On your map, you notice you have
 		2 unknown nodes: but they are actually the same place!
 
-		Thus, unknown nodes are special: 2 unknown nodes in the PartialGraph CAN 
+		Thus, unknown nodes are special: 2 unknown nodes in the PartialGraph CAN
 		represent the exact same node in the FullGraph.
 
-	
+
 	Discovered Nodes
 
 		When you first enter begin to enter an unknown room, you "discover it".
@@ -198,14 +198,14 @@ var GraphGenerator = (function() {
 		rooms that are Discovered, but Not Solved, will not reveal all of their
 		edges to you.   It is assumed that you have no fully entered the room,
 		but you are only peering at it through the passageway.  It's enough to
-		know whether you have been there before, but not enough to see all 
+		know whether you have been there before, but not enough to see all
 		of the other passageways.
 
 
 	Solved Nodes
-	
+
 		Solved nodes are where all nodes tend to end up.  Once you have solved
-		a room, it means you have identified all of the other passageways in 
+		a room, it means you have identified all of the other passageways in
 		that room.  You may not know where they lead yet, but you know that they
 		exist.
 
@@ -270,6 +270,7 @@ let GraphExplorer = (function(){
 				}
 			}
 		}
+		return realNode;
 	}
 
 	function solve(node, previousNode) {
@@ -297,25 +298,59 @@ let GraphExplorer = (function(){
 		return key;
 	}
 
-	class GraphExplorer {
-		constructor() {
-			this.fullGraph = fullGraph;
-			this.discovered = discovered;
-			this.unids = unids;
-			init();
-		}
-		discover(unidNode) {
-			discover(unidNode)
-		}
-		solve(node, previousNode) {
-			solve(node, previousNode)
-		}
+	function getCurrent() {
+		return currentNode;
 	}
-	
+
+	function getPrevious() {
+		return previousNode;
+	}
+
+	function getNearby() {
+		let arr = [];
+		if (discovered.has(currentNode) === true) {
+			for (let k of discovered.get(currentNode).values()) {
+				arr.push(k);
+			}	
+		}
+		return arr;
+	}
+
+	function travelTo(id) {
+		if (unids.has(id) === true) {
+			let name = discover(id);
+			previousNode = currentNode;
+			currentNode = name;
+			return true;
+		}
+		if (discovered.has(id) === true) {
+			previousNode = currentNode;
+			currentNode = id;
+			return true;
+		}
+		return false;
+	}
+
+	// initialize
+	init();
 
 	// returns functions through closure
-	return new GraphExplorer();
+	return {
+		fullGraph,
+		discovered,
+		unids,
+		solve,
+		discover,
+		travelTo,
+		getCurrent,
+		getPrevious,
+		getNearby,
+	}
+
 }())
+
+
+
 
 
 
@@ -329,28 +364,28 @@ const dataConverter = (function(){
 		switch (id) {
 		case 'start':
 			return {
-				'id':     id, 
+				'id':     id,
 				'label':  id,
 				'shape': 'hexagon',
 				'color': 'green',
 			};
 		case 'finish':
 			return {
-				'id':     id, 
+				'id':     id,
 				'label':  id,
 				'shape': 'star',
 				'color': 'orange',
 			}
 		}
 		return {
-			'id':id, 
+			'id':id,
 			'label':id
 		};
 	}
 
 	const makeEdge = (from, to)=> {
 		return {
-			from: from, 
+			from: from,
 			to: to,
 		};
 	}
@@ -396,5 +431,3 @@ const dataConverter = (function(){
 		removeDuplicateEdges,
 	}
 }());
-
-

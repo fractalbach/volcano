@@ -7,19 +7,21 @@
 		height: '100%',
 		width: '100%',
 		nodes: {
-			shape: 'circle',
+			shape: 'circle'
 		},
 		edges: {
 			smooth: {
 				enabled: true,
 				type: 'dynamic',
-				roundness: 0.1,
+				roundness: 0.1
 			},
 		},
 	};
 
-	let g = GraphGenerator;
 
+	// _________________________________________
+	//  Display the Explored Graph
+	// =========================================
 	let myNetwork = new vis.Network(
 		document.querySelector('#mynetwork'),
 		{},
@@ -27,15 +29,21 @@
 	);
 
 	const updateGraph = ()=>{
-		let d = dataConverter.convertListToVis(g.adjacencyList);
+		let d = dataConverter.convertListToVis(GraphGenerator.adjacencyList);
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
 		myNetwork.setData(d);
 		myNetwork.setOptions(options);
 		myNetwork.fit();
 	}
+
 	updateGraph();
 
 
+
+
+	// _________________________________________
+	//  Display the Explored Graph
+	// =========================================
 	let myExploredNetwork = new vis.Network(
 		document.querySelector('#myExploredNetwork'),
 		{},
@@ -49,22 +57,50 @@
 		myExploredNetwork.setOptions(options);
 		myExploredNetwork.fit();
 	}
+
 	updateExploredGraph();
 
+
+	// _________________________________________
+	//  Auto adjust size of graph.
+	// =========================================
 	window.addEventListener('resize', ()=> {
 		myNetwork.fit();
 		myExploredNetwork.fit();
 	})
 
-}());
 
-
-
-// _________________________________________
-//  Other Tests Go Here
-// =========================================
-(function() {
+	// _________________________________________
+	//  Other Tests Go Here
+	// =========================================
 
 	console.log(GraphExplorer);
-	
+
+	let textCurrentLoc = document.querySelector('#text-currentLocation');
+
+	const updateMyself = ()=> {
+		textCurrentLoc.innerText = GraphExplorer.getCurrent();
+		updateActionButtons();
+		updateExploredGraph();
+	}
+
+	// When in Solved Rooms:
+	// Update the Actions for movement.
+	const updateActionButtons = ()=> {
+		ActionButtons.clear();
+		for (let v of GraphExplorer.getNearby()) {
+			let e = ActionButtons.add(v, v)
+			let fn = ()=>{
+				// alert(`You are now traveling to ${v}`);
+				console.log(v)
+				GraphExplorer.travelTo(v);
+				GraphExplorer.solve(GraphExplorer.getCurrent());
+				updateMyself();
+			}
+			e.addEventListener('click', fn);
+		}
+	}
+
+	updateMyself();
+
 }());

@@ -12,12 +12,30 @@ h1, h2 {
 
 section {
     overflow: auto;
-    max-width: 50em;
-    max-height: calc(100% - 4em);
+    max-width: 40em;
+    max-height: 100%;
     background: #f5f5ff;
     border: solid 1px lightgray;
     margin: 0 auto;
     padding: 0 1em;
+    font-family: sans-serif;
+}
+
+#actionButtonContainer {
+    border: solid 1px lightgray;
+    height: 12em;
+    padding: 0.5em;
+    padding-bottom: 0;
+    overflow: auto;
+}
+
+.textbox {
+    background: #F8FCFF;
+    padding: 0.2em;
+    border-radius: 0.1em;
+    border: solid 1px #DDD;
+    display: inline-block;
+    font-variant:  all-small-caps;
 }
 
 .middleOverlay {

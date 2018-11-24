@@ -5,13 +5,13 @@
 
 	// Special Format: (button, overlay, originText, activeText)
 	// Used to create overlay togglers by pressing these buttons.
-	// This structure is exactly the same as the arguments for 
+	// This structure is exactly the same as the arguments for
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
-		['#button-Explore',  '#overlay-Explore', 'Map',      'Hide Map'],
-		['#button-ShowMenu', '#overlay-Menu',    'Menu',     'Hide Menu'],
-		['#button-Items',    '#overlay-Items',   'Items',    'Hide Items'],
-		['#button-FullMap',  '#overlay-FullMap', 'Secret Map', 'Hide Secret Map']
+		['#button-about', '#overlay-about',    'About',      'Hide About'],
+		['#button-Explore',  '#overlay-Explore', 'Map',        'Hide Map'],
+		['#button-FullMap',  '#overlay-FullMap', 'Secret Map', 'Hide Secret Map'],
+		// ['#button-Items',    '#overlay-Items',   'Items',    'Hide Items'],
 	]
 
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.
@@ -47,9 +47,6 @@
 		}
 	}
 
-	// initialize by making sure that the correct overlay is showing.
-	updateAll();
-
 	let toggleHandler = (n)=> {
 		if (n === currentlyEnabled) {
 			// return;
@@ -60,7 +57,7 @@
 		updateAll();
 	}
 
-	// MakeToggleFunc returns a function that can be used to toggle 
+	// MakeToggleFunc returns a function that can be used to toggle
 	// the visibility of different overlays. Maintains the fact that
 	// only a single overlay should be visible at any given time.
 	let MakeToggleFunc = (n)=> {
@@ -68,6 +65,9 @@
 			toggleHandler(n)
 		}
 	}
+
+	// initialize by making sure that the correct overlay is showing.
+	updateAll();
 
 	// generate the event listeners to toggle the windows.
 	for (let [n, entry] of buttons_and_their_overlays.entries()) {
@@ -77,4 +77,47 @@
 		document.querySelector(buttonSel).addEventListener('keypress', fn);
 	}
 
+}());
+
+
+
+// _________________________________________
+//  Action Buttons
+// =========================================
+let ActionButtons = (function() {
+
+	let buttonParent = document.querySelector('#actionButtonContainer');
+	let actionButtons = new Map();
+
+	const clear = ()=> {
+		for (let [k, v] of actionButtons.entries()) {
+			actionButtons.delete(k);
+			buttonParent.removeChild(v);
+		}
+	}
+
+	const add = (key, text)=> {
+		let e = document.createElement('div');
+		e.setAttribute('role', 'button');
+		e.classList.add('controlButton');
+		e.innerText = text;
+		actionButtons.set(key, e);
+		buttonParent.appendChild(e);
+		return e;
+	}
+
+	const remove = (key)=> {
+		if (actionButtons.has(key) !== true) {
+			console.warn(`couldn't find '${key}' action button.`);
+			return;
+		}
+		buttonParent.removeChild(actionButtons.get(id));
+		actionButtons.delete(id);
+	}
+
+	return {
+		clear,
+		add,
+		remove,
+	}
 }());

@@ -1,4 +1,4 @@
-.<!doctype html>
+<!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -21,15 +21,11 @@
             <div id="overlayUniverse">
 
                 <div id="overlay-default" class="middleOverlay">
-                    <h2>Default Screen</h2>
                     <section>
-                        <p>Hello there! </p>
-                        <p>Welcome to the Volcano Game! </p>
-                        <p>This is the default screen, try opening some tabs!</p>
-                        <h3>About the Default Screen</h3>
-                        <p>This is where action buttons go. Actions buttons change as you move around the game.  When you're in a battle, the buttons will show things like "attack", "defend", and "run away".  When you're exploring, the buttons will show the names of nearby areas.</p>
-                        <h3>Status</h3>
-                        <p>Exploring the Volcano is working behind the scenes!  Soon there will be buttons to traverse the volcano and the map will be updated.  Once that is working, the "See Full Map" will be disabled.  After that is done, monsters and battles will be added!</p>
+                        <h2>Current Location: <span id="text-currentLocation" class="textbox">Start</span></h2>
+                        <h3>Health: <progress id="health" name="Health" max="100" value="70">70%</progress></h3>
+                        <h2>Actions</h2>
+                        <div id='actionButtonContainer'></div>
                     </section>
                 </div>
 
@@ -41,14 +37,17 @@
                     <div id="myExploredNetwork"></div>
                 </div>
 
-                <div id="overlay-Menu" class="middleOverlay hidden">
-                    <h2>Menu</h2>
+                <div id="overlay-about" class="middleOverlay hidden">
                     <section>
-                        <p>Hello there! This is the Volcano Game Menu!</p>
-                        <p>This is where various options and other odds-n-ends will go.</p>
+                        <h2>About the Volcano Game</h2>
+                        <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
+                        <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
+                            The decision-based gameplay, and having only 1 life, is influenced by <a href="https://wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
+                            Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
+                            rather than graphics.</p>
                     </section>
                 </div>
-                
+
                 <div id="overlay-Items" class="middleOverlay hidden">
                     <h2>Inventory</h2>
                     <section>
@@ -60,11 +59,11 @@
             </div>
 
             <div id="wrapControls">
-                <div tabindex=0 role="button" class="controlButton" id="button-Explore">Map</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-Items">Items</div>
+                <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(true);">Reload</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-ShowMenu">Menu</div>
+                <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
+                <div tabindex=0 role="button" class="controlButton" id="button-Explore">Map</div>
+                <!-- <div tabindex=0 role="button" class="controlButton" id="button-Items">Items</div> -->
             </div>
 
 
@@ -76,7 +75,7 @@
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
         <script type="text/javascript" src="src/graphDisplay.js"></script>
-        
+
         <script type="text/javascript">
             // Fix for allowing mobile safari to have touch effeects.
             document.addEventListener("touchstart", function() {}, true);
