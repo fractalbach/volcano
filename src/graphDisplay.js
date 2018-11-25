@@ -53,15 +53,17 @@
 	const updateExploredGraph = ()=>{
 		let d = dataConverter.convertListToVis(GraphExplorer.discovered);
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
+		let current = GraphExplorer.getCurrent();
 		for (let n of d.nodes) {
-			if (n.id === GraphExplorer.getCurrent()) {
+			if (n.id !== current) {
+				n['color']['border'] = 'lightgray';
+			}
+			if (n.id === current) {
 				n['borderWidth'] = 3;
-				// n['color']['border'] = 'red';
 				continue;
 			}
-			if (n.id === GraphExplorer.getPrevious()) {
-				n['borderWidth'] = 2;
-				// n['color']['border'] = 'purple';
+			if (GraphExplorer.unids.has(n.id)) {
+				n['color']['background'] = 'white';
 				continue;
 			}
 		}
