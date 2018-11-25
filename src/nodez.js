@@ -220,9 +220,13 @@ let GraphExplorer = (function(){
 	let fullGraph =  GraphGenerator.adjacencyList;
 	let discovered = new Map();
 	let unids = new Map();
+	let solved = new Set();
 
 	// unidPrefix used for display names of the unknown rooms.
 	let unidPrefix = 'unknown ';
+
+	// used with the unidPrefix to make a unique id for an unknown room.
+	let nextid = 0;
 
 
 	function init() {
@@ -273,9 +277,12 @@ let GraphExplorer = (function(){
 		return realNode;
 	}
 
-	function solve(node, previousNode) {
+	function solve(node) {
 		if (!discovered.has(node)) {
 			console.warn(`can't solve '${node}'; hasn't been discovered.`);
+			return;
+		}
+		if (isSolved(node)) {
 			return;
 		}
 		for (let realNode of fullGraph.get(node)) {
@@ -286,16 +293,19 @@ let GraphExplorer = (function(){
 				discovered.set(fakeNode, new Set([node]));
 			}
 		}
+		solved.add(node);
 	}
 
 	function nextFakeKey() {
-		let index = 1;
-		let key = unidPrefix + index;
-		while (unids.has(key)) {
-			index++;
-			key = unidPrefix + index;
-		}
-		return key;
+		// let index = 1;
+		// let key = unidPrefix + index;
+		// while (unids.has(key)) {
+		// 	index++;
+		// 	key = unidPrefix + index;
+		// }
+		// return key;
+		nextid++;
+		return unidPrefix + nextid;
 	}
 
 	function getCurrent() {
@@ -311,9 +321,13 @@ let GraphExplorer = (function(){
 		if (discovered.has(currentNode) === true) {
 			for (let k of discovered.get(currentNode).values()) {
 				arr.push(k);
-			}	
+			}
 		}
 		return arr;
+	}
+
+	function isSolved(id) {
+		return solved.has(id);
 	}
 
 	function travelTo(id) {
@@ -342,6 +356,7 @@ let GraphExplorer = (function(){
 		solve,
 		discover,
 		travelTo,
+		isSolved,
 		getCurrent,
 		getPrevious,
 		getNearby,
@@ -367,19 +382,20 @@ const dataConverter = (function(){
 				'id':     id,
 				'label':  id,
 				'shape': 'hexagon',
-				'color': 'green',
+				'color': {'background': 'green'},
 			};
 		case 'finish':
 			return {
 				'id':     id,
 				'label':  id,
 				'shape': 'star',
-				'color': 'orange',
+				'color': {'background': 'orange'},
 			}
 		}
 		return {
 			'id':id,
-			'label':id
+			'label':id,
+			'color': {},
 		};
 	}
 

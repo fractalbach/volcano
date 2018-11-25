@@ -53,6 +53,18 @@
 	const updateExploredGraph = ()=>{
 		let d = dataConverter.convertListToVis(GraphExplorer.discovered);
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
+		for (let n of d.nodes) {
+			if (n.id === GraphExplorer.getCurrent()) {
+				n['borderWidth'] = 3;
+				// n['color']['border'] = 'red';
+				continue;
+			}
+			if (n.id === GraphExplorer.getPrevious()) {
+				n['borderWidth'] = 2;
+				// n['color']['border'] = 'purple';
+				continue;
+			}
+		}
 		myExploredNetwork.setData(d);
 		myExploredNetwork.setOptions(options);
 		myExploredNetwork.fit();
@@ -92,8 +104,9 @@
 			let e = ActionButtons.add(v, v)
 			let fn = ()=>{
 				// alert(`You are now traveling to ${v}`);
-				console.log(v)
+				// console.log(v)
 				GraphExplorer.travelTo(v);
+				// console.log(`previous=${GraphExplorer.getPrevious()}, current=${GraphExplorer.getCurrent()}`)
 				GraphExplorer.solve(GraphExplorer.getCurrent());
 				updateMyself();
 			}
