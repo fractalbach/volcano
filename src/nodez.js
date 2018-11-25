@@ -1,3 +1,27 @@
+
+// helpful functions that can be used throughout program.
+
+const randint = (min, max)=> {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const shuffleSet = (s)=> {
+	let n = s.size
+	let a = [];
+	for (let e of s) {
+		a.push(e);
+	}
+	for (let i = (n-1); i > 1; i--) {
+		j = randint(0, i);
+		let temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
+	}
+	return new Set(a);
+}
+
 /*
 	GraphGenerator
 		The GraphGenerator is the mechanism that creates volcano maps!
@@ -39,12 +63,6 @@ var GraphGenerator = (function() {
 	// let edgeDataItem = (from, to)=> {
 	// 	return {'from': from, 'to': to};
 	// }
-
-	let randint = (min, max)=> {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
 
 	let makeTable = (nLevels, minNodes, maxNodes)=> {
 		let table = new Array(nLevels)
@@ -285,7 +303,8 @@ let GraphExplorer = (function(){
 		if (isSolved(node)) {
 			return;
 		}
-		for (let realNode of fullGraph.get(node)) {
+		let s = shuffleSet(fullGraph.get(node));
+		for (let realNode of s) {
 			if (realNode !== previousNode) {
 				let fakeNode = nextFakeKey();
 				unids.set(fakeNode, realNode);
