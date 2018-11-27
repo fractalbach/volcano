@@ -12,7 +12,31 @@ var game = (function(){
 			attack: 10,
 			defense: 10,
 			speed: 10,
+			surpriseBonus: 0,
 		}
+	}
+
+	// determine Surprise will calculate which party will be surprised,
+	//  'M':  monster is surprised
+	//  '-':  neither is surprised
+	//  'P':  player is surprised
+	//
+	// mosnter or player bonus should be a number between 0-1,
+	// higher bonus means less likely to get surprised AND means higher
+	// chance of surprising the other party.
+	//
+	const determineSurprise = (playerBonus=0, monsterBonus=0)=> {
+		zoneOfNeither = 0.3;
+		playerRoll = Math.random();
+		monsterRoll = Math.random();
+		difference = (playerRoll + playerBonus) - (monsterRoll + monsterBonus);
+		if (difference > zoneOfNeither) {
+			return 'M'
+		}
+		if (difference < -zoneOfNeither) {
+			return 'P'
+		}
+		return '-'
 	}
 
 	class Ent {
@@ -32,10 +56,12 @@ var game = (function(){
 	}
 
 	let myplayer = new Ent();
+	let monstermap = new Map();
 
 	return {
 		Ent,
 		myplayer,
+		determineSurprise,
 	}
 
 }());
