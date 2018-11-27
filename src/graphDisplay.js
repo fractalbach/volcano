@@ -1,7 +1,7 @@
 // _________________________________________
 //  Displaying the Graph using vis.js
 // =========================================
-(function() {
+var GraphDisplay = (function() {
 
 	let options = {
 		height: '100%',
@@ -70,8 +70,7 @@
 		myExploredNetwork.setData(d);
 		myExploredNetwork.setOptions(options);
 		myExploredNetwork.fit();
-	}
-
+	};
 	updateExploredGraph();
 
 
@@ -85,18 +84,28 @@
 
 
 	// _________________________________________
-	//  Other Tests Go Here
+	//  GraphDisplay Public
 	// =========================================
-
-	console.log(GraphExplorer);
-
-	let textCurrentLoc = document.querySelector('#text-currentLocation');
-
-	const updateMyself = ()=> {
-		textCurrentLoc.innerText = GraphExplorer.getCurrent();
-		updateActionButtons();
-		updateExploredGraph();
+	return {
+		updateExploredGraph,  // f: redraws explored map based on GraphExplorer
 	}
+
+}());
+
+
+
+
+
+
+// _________________________________________
+//  Main
+// =========================================
+(function() {
+
+	// _________________________________________
+	//  Updating the Action Buttons and Text
+	// =========================================
+	let textCurrentLoc = document.querySelector('#text-currentLocation');
 
 	// When in Solved Rooms:
 	// Update the Actions for movement.
@@ -105,17 +114,24 @@
 		for (let v of GraphExplorer.getNearby()) {
 			let e = ActionButtons.add(v, v)
 			let fn = ()=>{
-				// alert(`You are now traveling to ${v}`);
-				// console.log(v)
 				GraphExplorer.travelTo(v);
-				// console.log(`previous=${GraphExplorer.getPrevious()}, current=${GraphExplorer.getCurrent()}`)
 				GraphExplorer.solve(GraphExplorer.getCurrent());
 				updateMyself();
 			}
 			e.addEventListener('click', fn);
 		}
 	}
-
+	
+	const updateMyself = ()=> {
+		textCurrentLoc.innerText = GraphExplorer.getCurrent();
+		updateActionButtons();
+		GraphDisplay.updateExploredGraph();
+	}
 	updateMyself();
+
+
+
+	console.log(GraphExplorer);
+
 
 }());
