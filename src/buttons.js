@@ -8,8 +8,8 @@
 	// This structure is exactly the same as the arguments for
 	// the functoin MakeToggleFunc
 	let buttons_and_their_overlays = [
-		['#button-about', '#overlay-about',    'About',      'Hide About'],
-		['#button-Explore',  '#overlay-Explore', 'Map',        'Hide Map'],
+		// ['#button-about', '#overlay-about',    'About',      'Hide About'],
+		// ['#button-Explore',  '#overlay-Explore', 'Map',        'Hide Map'],
 		['#button-FullMap',  '#overlay-FullMap', 'Secret Map', 'Hide Secret Map'],
 		// ['#button-Items',    '#overlay-Items',   'Items',    'Hide Items'],
 	]

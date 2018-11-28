@@ -11,66 +11,55 @@
     </head>
     <body>
         <div id="wholescreen">
-            <div id="wrapTitle">
-                <!-- <h1 id="title">🌋 The Volcano Game 🌋</h1> -->
-            </div>
-            <div id="overlayUniverse">
-                <div id="overlay-default" class="middleOverlay">
-                    <div class="pageSection">
-                        <h1 style="whitespace:;">🌋 The Volcano Game 🌋</h1>
-                        <!-- <h2>Volcano Explorer</h2> -->
-                        <div class="wrapInlineGraph" style="height:20em">
-                            <div id="myExploredNetwork"></div>
-                        </div>
-                        <div style="text-align:center;">
-                            Current Location:
-                            <span id="text-currentLocation" class="textbox">Start</span>
-                        </div>
-                        <h3>Player</h3>
-                            <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
-                        <h3>Room</h3>
-                            <p>Room State: <span id="text-roomstate" class="textbox"></span></p>
-                            <p>Message: <span id="text-roomMessage" class="texthighlight">hello!</span></p>
-                            <p>Monster Info: <span id="text-monsterinfo" class="texthighlight"></span></p>
-                        <h2><span id="text-actionButtonTitle">Actions</span></h2>
-                        <!-- <div id='actionButtonContainer'></div> -->
+
+
+            <div id="overlay-default" class="middleOverlay">
+                <div class="pageSection">
+                    <div id="headerWrapper">
+                        <h1>🌋 The Volcano Game 🌋</h1>
                     </div>
-                </div>
+                    <!-- <div class="centerText">About the Volcano Game</div> -->
 
-                <div id="overlay-FullMap" class="middleOverlay hidden wrapGraph">
-                    <div id="mynetwork"></div>
-                </div>
-
-                <div id="overlay-Explore" class="middleOverlay hidden wrapGraph">
-                    <!-- <div id="myExploredNetwork"></div> -->
-                </div>
-
-                <div id="overlay-about" class="middleOverlay hidden">
-                    <div class="pageSection">
-                        <h1>About the Volcano Game</h1>
-                        <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
-                        <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
-                            The decision-based gameplay, and having only 1 life, is influenced by <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
-                            Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
-                            rather than graphics.</p>
+                    <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
+                    <div class="wrapInlineGraph">
+                        <div id="myExploredNetwork"></div>
                     </div>
+                    <p>
+                        Room:
+                        <span id="text-currentLocation" class="textbox">Start</span>
+                        <span id="text-roomstate" class="textbox"></span>
+                    </p>
+                    <!-- <p>Room State: <span id="text-roomstate" class="textbox"></span></p> -->
+                    <p>Monster: <span id="text-monsterinfo" class="texthighlight"></span></p>
+                    <p><span id="text-roomMessage" class="texthighlight">hello!</span></p>
+                    <h2><span style="display:none;" id="text-actionButtonTitle">Actions</span></h2>
+                    <!-- <div id='actionButtonContainer'></div> -->
                 </div>
-
-                <div id="overlay-Items" class="middleOverlay hidden">
-                    <h2>Inventory</h2>
-                    <section>
-                        <p>This is where items and treasure you collect will go! (Once they are added to the game).</p>
-                        <p> Some items are like supplies:  food and water that can heal you.  Other items are useful: like arrows and weapons that you can use against the monsters.  Some are just treasure: like gems.  (In the future there might be more uses for items.)</p>
-                    </section>
-                </div>
-
             </div>
+
+
+            <div id="overlay-FullMap" class="middleOverlay hidden wrapGraph">
+                <div id="mynetwork"></div>
+            </div>
+
+
+            <div id="overlay-about" class="middleOverlay hidden">
+                <div class="pageSection">
+                    <h1>About the Volcano Game</h1>
+                    <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
+                    <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
+                        The decision-based gameplay, and having only 1 life, is influenced by <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
+                        Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
+                        rather than graphics.</p>
+                </div>
+            </div>
+
 
             <div class="wrapControls" id='actionButtonContainer'>
-                <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(false);">Reload</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-Explore" style="display:none;">Map</div>
+                <!-- <div tabindex=0 role="button" class="controlButton" id="button-about">About</div> -->
+                <!-- <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(false);">Reload</div> -->
+                <!-- <div tabindex=0 role="button" class="controlButton" id="button-Explore">Map</div> -->
                 <!-- <div tabindex=0 role="button" class="controlButton" id="button-Items">Items</div> -->
             </div>
 
@@ -81,10 +70,8 @@
         <script type="text/javascript" src="src/nodez.js"></script>
         <script type="text/javascript" src="src/buttons.js"></script>
         <script type="text/javascript" src="src/game.js"></script>
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
         <script type="text/javascript" src="src/display.js"></script>
-
         <script type="text/javascript">
             // Fix for allowing mobile safari to have touch effeects.
             document.addEventListener("touchstart", function() {}, true);
