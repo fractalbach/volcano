@@ -52,7 +52,7 @@ var game = (function(){
 		return {
 			health: 500,
 			healthMax: 500,
-			attack: 15,
+			attack: 17,
 			defense: 15,
 			// speed: 10,
 			// surpriseBonus: 0,

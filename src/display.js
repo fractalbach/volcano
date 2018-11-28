@@ -4,6 +4,7 @@
 var GraphDisplay = (function() {
 
 	let options = {
+		clickToUse: true,
 		height: '100%',
 		width: '100%',
 		nodes: {
@@ -160,8 +161,8 @@ var GraphDisplay = (function() {
 			textMonsterInfo.innerText = 'clear';
 			addTravelButtons();
 		} else {
-			textActionTitle.innerText = `Choices:`
-			textRoomState.innerText = 'unsolved';
+			textActionTitle.innerText = `Fight or Flight:`
+			textRoomState.innerText = '⚔️ battle ⚔️';
 			updateMonsterText();
 			showBattleOption();
 			addGoBackButton();

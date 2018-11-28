@@ -11,20 +11,28 @@
     </head>
     <body>
         <div id="wholescreen">
-
-
             <div id="wrapTitle">
                 <h1 id="title">🌋 The Volcano Game 🌋</h1>
             </div>
-
-
             <div id="overlayUniverse">
-
                 <div id="overlay-default" class="middleOverlay">
                     <section>
-                        <h2>Current Location:<br/> <span id="text-currentLocation" class="textbox">Start</span></h2>
-                        <h3>Health: <progress id="health" name="Health" max="100" value="100">100</progress></h3>
-                        <h3>Room State: <span id="text-roomstate" class="textbox"></span></h3>
+                        <h2>Volcano Explorer</h2>
+                        <figure>
+                            <div class="wrapInlineGraph" style="height:20em">
+                                <div id="myExploredNetwork"></div>
+                            </div>
+                            <figcaption>
+                                <div style="text-align:center;">
+                                    Current Location:
+                                    <span id="text-currentLocation" class="textbox">Start</span>
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <h3>Player</h3>
+                            <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
+                        <h3>Room</h3>
+                            <p>Room State: <span id="text-roomstate" class="textbox"></span></p>
                             <p>Message: <span id="text-roomMessage" class="texthighlight">hello!</span></p>
                             <p>Monster Info: <span id="text-monsterinfo" class="texthighlight"></span></p>
                         <h2><span id="text-actionButtonTitle">Actions</span></h2>
@@ -37,7 +45,7 @@
                 </div>
 
                 <div id="overlay-Explore" class="middleOverlay hidden wrapGraph">
-                    <div id="myExploredNetwork"></div>
+                    <!-- <div id="myExploredNetwork"></div> -->
                 </div>
 
                 <div id="overlay-about" class="middleOverlay hidden">
@@ -65,7 +73,7 @@
                 <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(false);">Reload</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
-                <div tabindex=0 role="button" class="controlButton" id="button-Explore">Map</div>
+                <div tabindex=0 role="button" class="controlButton" id="button-Explore" style="display:none;">Map</div>
                 <!-- <div tabindex=0 role="button" class="controlButton" id="button-Items">Items</div> -->
             </div>
 
