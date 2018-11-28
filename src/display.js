@@ -103,33 +103,74 @@ var GraphDisplay = (function() {
 (function() {
 
 	// _________________________________________
+	//  Initialize and generate game rooms.
+	// =========================================
+	game.initRoomMap(GraphGenerator.adjacencyList);
+	console.log(game.roomMap);
+
+	// _________________________________________
 	//  Updating the Action Buttons and Text
 	// =========================================
 	let textCurrentLoc = document.querySelector('#text-currentLocation');
+	let textRoomState = document.querySelector('#text-roomstate');
+	let textActionTitle = document.querySelector('#text-actionButtonTitle');
 
 	// When in Solved Rooms:
 	// Update the Actions for movement.
 	const updateActionButtons = ()=> {
 		ActionButtons.clear();
+		if (GraphExplorer.isSolved(GraphExplorer.getCurrent())) {
+			textActionTitle.innerText = `Choices:`
+			textRoomState.innerText = `✔️ Solved ✔️`;
+			addTravelButtons();
+		} else {
+			textActionTitle.innerText = `Travel:`;
+			textRoomState.innerText = 'unsolved';
+			addInstaSolveButton();
+			addGoBackButton();
+		}
+	}
+
+	// Instant Solve button is an experiment.
+	// Solves the Room when you click it.
+	const addInstaSolveButton = ()=> {
+		let e = ActionButtons.add('solver', 'Solve Room');
+		let fn = ()=> {
+			GraphExplorer.solve(GraphExplorer.getCurrent());
+			updateMyself();
+		}
+		e.addEventListener('click', fn);
+	}
+
+	// Go Back Button immediately moves the player to the previousNode
+	// without solving the room.
+	const addGoBackButton = ()=> {
+		let e = ActionButtons.add('goback', 'Go Back');
+		let fn = ()=> {
+			GraphExplorer.travelTo(GraphExplorer.getPrevious());
+			updateMyself();
+		}
+		e.addEventListener('click', fn);
+	}
+
+	const addTravelButtons = ()=> {
 		for (let v of GraphExplorer.getNearby()) {
 			let e = ActionButtons.add(v, v)
-			let fn = ()=>{
+			let fn = ()=> {
 				GraphExplorer.travelTo(v);
-				GraphExplorer.solve(GraphExplorer.getCurrent());
+				// GraphExplorer.solve(GraphExplorer.getCurrent());
 				updateMyself();
 			}
 			e.addEventListener('click', fn);
 		}
 	}
-	
+
 	const updateMyself = ()=> {
 		textCurrentLoc.innerText = GraphExplorer.getCurrent();
 		updateActionButtons();
 		GraphDisplay.updateExploredGraph();
 	}
 	updateMyself();
-
-
 
 	console.log(GraphExplorer);
 

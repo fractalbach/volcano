@@ -369,6 +369,7 @@ let GraphExplorer = (function(){
 
 	// returns functions through closure
 	return {
+		solved,
 		fullGraph,
 		discovered,
 		unids,

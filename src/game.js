@@ -6,16 +6,6 @@ var game = (function(){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	const defaultStats = ()=> {
-		return {
-			health: 1000,
-			attack: 10,
-			defense: 10,
-			speed: 10,
-			surpriseBonus: 0,
-		}
-	}
-
 	// determine Surprise will calculate which party will be surprised,
 	//  'M':  monster is surprised
 	//  '-':  neither is surprised
@@ -39,9 +29,20 @@ var game = (function(){
 		return '-'
 	}
 
+
+	const defaultEntStats = ()=> {
+		return {
+			health: 1000,
+			attack: 10,
+			defense: 10,
+			speed: 10,
+			surpriseBonus: 0,
+		}
+	}
+
 	class Ent {
 		constructor(stats) {
-			this.stats = defaultStats();
+			this.stats = defaultEntStats();
 			Object.assign(this.stats, stats);
 		}
 		rollAttack() {
@@ -55,13 +56,43 @@ var game = (function(){
 		}
 	}
 
+	class Room {
+		constructor(data, startingState, functionMap) {
+			this.isSolved = false;
+			this.data = data;
+			this.state = startingState;
+			this.functionMap = functionMap;
+		}
+
+		call() {
+			let fn = this.functionMap[this.state];
+			if (typeof fn === "function") {
+				fn();
+			}
+		}
+	}
+
+	const generateRoom = ()=> {
+		return new Room(
+			{monster: new Ent(),},
+		);
+	}
+
 	let myplayer = new Ent();
-	let monstermap = new Map();
+	let roomMap = new Map();
+
+	const initRoomMap = (adjlist)=> {
+		for (let k of adjlist.keys()) {
+			roomMap.set(k, generateRoom());
+		}
+	}
 
 	return {
+		initRoomMap,
 		Ent,
 		myplayer,
 		determineSurprise,
+		roomMap
 	}
 
 }());
