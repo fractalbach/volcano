@@ -1,5 +1,9 @@
 var game = (function(){
 
+	// ____________________________________________________________
+	//   Functions for Random Numbers
+	// ============================================================
+
 	const randint = (min, max)=> {
 		min = Math.ceil(min);
 		max = Math.floor(max);
@@ -13,6 +17,9 @@ var game = (function(){
 		return Math.floor(r * (max - min + 1)) + min;
 	}
 
+	// ____________________________________________________________
+	//   Functions for General Mechanics
+	// ============================================================
 
 	// determine Surprise will calculate which party will be surprised,
 	//  'M':  monster is surprised
@@ -37,22 +44,28 @@ var game = (function(){
 		return '-'
 	}
 
+	// ____________________________________________________________
+	//   Entity - class for Monsters and Players
+	// ============================================================
 
 	const defaultEntStats = ()=> {
 		return {
 			health: 1000,
-			attack: 10,
-			defense: 10,
+			attack: 100,
+			defense: 20,
 			speed: 10,
 			surpriseBonus: 0,
 		}
 	}
 
 	const makeRandomMonster = ()=> {
+		let hpMax = randintNorm(100,300);
 		return {
-			health: randint(100,300),
-			attack: randint(10,100),
-			defense: randint(10,20),
+			attack: randintNorm(10,100),
+			defense: randintNorm(10,20),
+			health: hpMax,
+			healthMax: hpMax,
+			currentAction: 'defend',
 		}
 	}
 
@@ -61,45 +74,52 @@ var game = (function(){
 			this.stats = defaultEntStats();
 			Object.assign(this.stats, stats);
 		}
-		rollAttack() {
-			return randint(0, this.attack);
+
+		isAlive() {
+			return (this.stats.health <= 0)
 		}
-		rollDefend() {
-			return randint(0, this.defense);
+
+		hpPercent() {
+			return (this.stats.health / this.stats.healthMax)
 		}
-		rollDodge() {
-			return randint(0, this.speed);
-		}
+
 	}
+
+	const battle = ()=> {
+
+	}
+
+	// ____________________________________________________________
+	//   Room - container for the data at each node.
+	// ============================================================
 
 	const defaultRoomData = ()=> {
 		return {
+			isSolved: false,
 			options: new Map(),
 			state: new Set(),
-			monster: new Ent(),
+			monster: makeRandomMonster(),
 		}
 	}
 
 	class Room {
 		constructor(data) {
-			this.isSolved = false;
 			this.data = defaultRoomData();
 			Object.assign(this.data, data);
 		}
 
-		call() {
-			let fn = this.functionMap[this.state];
-			if (typeof fn === "function") {
-				fn();
-			}
+		isSolved() {
+			return this.data.isSolved;
 		}
 	}
 
 	const generateRoom = ()=> {
-		return new Room(
-			{monster: new Ent(),},
-		);
+		return new Room();
 	}
+
+	// ____________________________________________________________
+	//   Init, and Public Variables & Functions
+	// ============================================================
 
 	let myplayer = new Ent();
 	let roomMap = new Map();
@@ -111,11 +131,17 @@ var game = (function(){
 	}
 
 	return {
-		initRoomMap,
+		// class definitions
 		Ent,
-		myplayer,
-		determineSurprise,
-		roomMap
+		Room,
+
+		// functions
+		initRoomMap,       // void, make sure to call this first.
+		determineSurprise, // returns 'M', 'P', or '-'.
+
+		// variables
+		roomMap,  // map of (nodeid) --> (Room object)
+		myplayer, // special instance of class Ent.
 	}
 
 }());

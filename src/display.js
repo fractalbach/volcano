@@ -108,7 +108,6 @@ var GraphDisplay = (function() {
 	//  Initialize and generate game rooms.
 	// =========================================
 	game.initRoomMap(GraphGenerator.adjacencyList);
-	console.log(game.roomMap);
 
 	// _________________________________________
 	//  Updating the Action Buttons and Text
@@ -174,7 +173,7 @@ var GraphDisplay = (function() {
 	}
 	updateMyself();
 
-	console.log(GraphExplorer);
-
+	console.log('GraphExplorer:\n', GraphExplorer);
+	console.log('RoomMap:\n', game.roomMap);
 
 }());
