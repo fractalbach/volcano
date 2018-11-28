@@ -12,23 +12,20 @@
     <body>
         <div id="wholescreen">
             <div id="wrapTitle">
-                <h1 id="title">🌋 The Volcano Game 🌋</h1>
+                <!-- <h1 id="title">🌋 The Volcano Game 🌋</h1> -->
             </div>
             <div id="overlayUniverse">
                 <div id="overlay-default" class="middleOverlay">
-                    <section>
-                        <h2>Volcano Explorer</h2>
-                        <figure>
-                            <div class="wrapInlineGraph" style="height:20em">
-                                <div id="myExploredNetwork"></div>
-                            </div>
-                            <figcaption>
-                                <div style="text-align:center;">
-                                    Current Location:
-                                    <span id="text-currentLocation" class="textbox">Start</span>
-                                </div>
-                            </figcaption>
-                        </figure>
+                    <div class="pageSection">
+                        <h1 style="whitespace:;">🌋 The Volcano Game 🌋</h1>
+                        <!-- <h2>Volcano Explorer</h2> -->
+                        <div class="wrapInlineGraph" style="height:20em">
+                            <div id="myExploredNetwork"></div>
+                        </div>
+                        <div style="text-align:center;">
+                            Current Location:
+                            <span id="text-currentLocation" class="textbox">Start</span>
+                        </div>
                         <h3>Player</h3>
                             <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
                         <h3>Room</h3>
@@ -36,8 +33,8 @@
                             <p>Message: <span id="text-roomMessage" class="texthighlight">hello!</span></p>
                             <p>Monster Info: <span id="text-monsterinfo" class="texthighlight"></span></p>
                         <h2><span id="text-actionButtonTitle">Actions</span></h2>
-                        <div id='actionButtonContainer'></div>
-                    </section>
+                        <!-- <div id='actionButtonContainer'></div> -->
+                    </div>
                 </div>
 
                 <div id="overlay-FullMap" class="middleOverlay hidden wrapGraph">
@@ -49,14 +46,14 @@
                 </div>
 
                 <div id="overlay-about" class="middleOverlay hidden">
-                    <section>
-                        <h2>About the Volcano Game</h2>
+                    <div class="pageSection">
+                        <h1>About the Volcano Game</h1>
                         <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
                         <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
                             The decision-based gameplay, and having only 1 life, is influenced by <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
                             Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
                             rather than graphics.</p>
-                    </section>
+                    </div>
                 </div>
 
                 <div id="overlay-Items" class="middleOverlay hidden">
@@ -69,7 +66,7 @@
 
             </div>
 
-            <div id="wrapControls">
+            <div class="wrapControls" id='actionButtonContainer'>
                 <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(false);">Reload</div>
                 <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
