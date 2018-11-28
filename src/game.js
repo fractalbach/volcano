@@ -50,43 +50,61 @@ var game = (function(){
 
 	const defaultEntStats = ()=> {
 		return {
-			health: 1000,
-			attack: 100,
-			defense: 20,
-			speed: 10,
-			surpriseBonus: 0,
+			health: 500,
+			healthMax: 500,
+			attack: 15,
+			defense: 15,
+			// speed: 10,
+			// surpriseBonus: 0,
+			// currentAction: 'defend',
 		}
 	}
 
 	const makeRandomMonster = ()=> {
-		let hpMax = randintNorm(100,300);
-		return {
-			attack: randintNorm(10,100),
-			defense: randintNorm(10,20),
+		let hpMax = randintNorm(20,150);
+		let data = {
 			health: hpMax,
 			healthMax: hpMax,
-			currentAction: 'defend',
+			attack: randintNorm(10,20),
+			defense: randintNorm(10,20),
+			// speed: 0,
+			// surpriseBonus: 0,
+			// currentAction: 'defend',
 		}
+		return new Ent(data);
 	}
 
 	class Ent {
-		constructor(stats) {
-			this.stats = defaultEntStats();
-			Object.assign(this.stats, stats);
+		constructor(data) {
+			this.data = defaultEntStats();
+			Object.assign(this.data, data);
 		}
 
 		isAlive() {
-			return (this.stats.health <= 0)
+			return (this.data.health > 0)
 		}
 
 		hpPercent() {
-			return (this.stats.health / this.stats.healthMax)
+			return (this.data.health / this.data.healthMax)
 		}
 
 	}
 
-	const battle = ()=> {
-
+	const doBattle = (ent1, ent2)=> {
+		if ((ent1 <= 0) || (ent2 <= 0)) {
+			console.warn(`You just tried to fight a dead ent.`, ent1, ent2)
+			return;
+		}
+		let ent1Roll = randintNorm(1, 20)
+		let ent2Roll = randintNorm(1, 20)
+		let ent1Damage = (ent1Roll + ent1.data.attack - ent2.data.defense)
+		let ent2Damage = (ent2Roll + ent2.data.attack - ent1.data.defense)
+		// prevent damage from going into negatives.
+		if (ent1Damage < 0) {ent1Damage = 0}
+		if (ent2Damage < 0) {ent2Damage = 0}
+		ent2.data.health -= ent1Damage
+		ent1.data.health -= ent2Damage
+		return [ent1Damage, ent2Damage] // return damage to use as a message.
 	}
 
 	// ____________________________________________________________
@@ -99,6 +117,7 @@ var game = (function(){
 			options: new Map(),
 			state: new Set(),
 			monster: makeRandomMonster(),
+			message: `You have entered a new room.`,
 		}
 	}
 
@@ -110,6 +129,21 @@ var game = (function(){
 
 		isSolved() {
 			return this.data.isSolved;
+		}
+
+		fightMonsterInRoomWith(player) {
+			let [d1, d2] = doBattle(player, this.data.monster);
+			if (this.data.monster.data.health <= 0) {
+				console.log(this.data.monster)
+				this.data.isSolved = true;
+				this.data.message = `You've defeated the monster!`;
+				this.data.monster.data.health = 0;
+			} else {
+				this.data.message = (
+					`You hit the monster for ${d1} damage.` + '\n' +
+					`The monster hit you for ${d2} damage.`
+				)
+			}
 		}
 	}
 
@@ -128,6 +162,8 @@ var game = (function(){
 		for (let k of adjlist.keys()) {
 			roomMap.set(k, generateRoom());
 		}
+		// specal message for the first room.
+		roomMap.get('start').data.message = `You are at the entrance to the volcano.`
 	}
 
 	return {

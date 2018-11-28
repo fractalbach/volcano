@@ -34,8 +34,15 @@ section {
     padding: 0.2em;
     border-radius: 0.1em;
     border: solid 1px #DDD;
-    display: inline-block;
+    display: inline-flex;
     font-variant:  all-small-caps;
+}
+
+.texthighlight {
+    background: #F8FCFF;
+    font-variant: small-caps;
+    outline: 1px solid lightgray;
+    display: inline-flex;
 }
 
 .middleOverlay {
