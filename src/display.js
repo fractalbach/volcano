@@ -59,12 +59,14 @@ var GraphDisplay = (function() {
 				n['color']['border'] = 'lightgray';
 			}
 			if (n.id === current) {
+				n['color']['border'] = 'red';
 				n['borderWidth'] = 3;
-				continue;
 			}
 			if (GraphExplorer.unids.has(n.id)) {
 				n['color']['background'] = 'white';
 				continue;
+			} else if (!GraphExplorer.isSolved(n.id)) {
+				n['color']['background'] = '#f0f5ff';
 			}
 		}
 		myExploredNetwork.setData(d);

@@ -6,6 +6,14 @@ var game = (function(){
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
+	const randintNorm = (min, max)=> {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		let r = (Math.random() + Math.random()) / 2;
+		return Math.floor(r * (max - min + 1)) + min;
+	}
+
+
 	// determine Surprise will calculate which party will be surprised,
 	//  'M':  monster is surprised
 	//  '-':  neither is surprised
@@ -40,6 +48,14 @@ var game = (function(){
 		}
 	}
 
+	const makeRandomMonster = ()=> {
+		return {
+			health: randint(100,300),
+			attack: randint(10,100),
+			defense: randint(10,20),
+		}
+	}
+
 	class Ent {
 		constructor(stats) {
 			this.stats = defaultEntStats();
@@ -56,12 +72,19 @@ var game = (function(){
 		}
 	}
 
+	const defaultRoomData = ()=> {
+		return {
+			options: new Map(),
+			state: new Set(),
+			monster: new Ent(),
+		}
+	}
+
 	class Room {
-		constructor(data, startingState, functionMap) {
+		constructor(data) {
 			this.isSolved = false;
-			this.data = data;
-			this.state = startingState;
-			this.functionMap = functionMap;
+			this.data = defaultRoomData();
+			Object.assign(this.data, data);
 		}
 
 		call() {
