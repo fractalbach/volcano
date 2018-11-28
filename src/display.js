@@ -17,6 +17,9 @@ var GraphDisplay = (function() {
 				roundness: 0.1
 			},
 		},
+		interaction: {
+			navigationButtons: true,
+		}
 	};
 
 	// _________________________________________
@@ -28,7 +31,7 @@ var GraphDisplay = (function() {
 		options,
 	);
 
-	const updateGraph = ()=>{
+	const updateGraph = ()=> {
 		let d = dataConverter.convertListToVis(GraphGenerator.adjacencyList);
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
 		myNetwork.setData(d);
@@ -71,6 +74,7 @@ var GraphDisplay = (function() {
 		myExploredNetwork.fit();
 	};
 
+
 	updateExploredGraph();
 
 	// _________________________________________
@@ -81,11 +85,31 @@ var GraphDisplay = (function() {
 		myExploredNetwork.fit();
 	})
 
+
+	// _________________________________________
+	//  When Nodes are clicked
+	// =========================================
+
+	const addNodeSelectListener = (fn)=> {
+		myExploredNetwork.on("selectNode", function(params) {
+			if (params.nodes === undefined) {
+				console.warn("selectNode event: nodes are undefined!");
+				return;
+			}
+			if (params.nodes.length >= 1) {
+				let nodeId = params.nodes[0];
+				fn(nodeId);
+			}
+			// console.log('selectNode Event:', params);
+	    });
+	}
+
 	// _________________________________________
 	//  GraphDisplay Public
 	// =========================================
 	return {
-		updateExploredGraph,  // f: redraws explored map based on GraphExplorer
+		updateExploredGraph,   // f(): redraws the explored graph display.
+		addNodeSelectListener, // f(fn): calls fn(nodeId) when node is selected.
 	}
 
 }());
@@ -256,12 +280,30 @@ var GraphDisplay = (function() {
 	}
 
 	// _________________________________________
+	//  Attempt to travel to a clicked node
+	// =========================================
+
+	// generates a handler function and adds it to the vis.js graph.
+	// that handler function gets called whenever a node is selected.
+	// GraphExplorer will handle the travel logic.
+	const initSelectedNodeTravelHandler = ()=> {
+		let fn = (node)=> {
+			if (GraphExplorer.attemptTravel(node) === true) {
+				updateAll();
+			}
+		}
+		GraphDisplay.addNodeSelectListener(fn);
+	}
+
+
+	// _________________________________________
 	//  Init and Finish
 	// =========================================
 
 	// Initialize At the beginning to show the first set of
 	// buttons.  These should always be on the 'START' room.
 	updateAll();
+	initSelectedNodeTravelHandler();
 
 	// Display debug information to the console.
 	console.log('GraphExplorer:\n', GraphExplorer);

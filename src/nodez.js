@@ -364,24 +364,38 @@ let GraphExplorer = (function(){
 		return false;
 	}
 
-	// initialize
-	init();
-
-	// returns functions through closure
-	return {
-		solved,
-		fullGraph,
-		discovered,
-		unids,
-		solve,
-		discover,
-		travelTo,
-		isSolved,
-		getCurrent,
-		getPrevious,
-		getNearby,
+	function attemptTravel(id) {
+		if (id === undefined) {
+			console.warn('attemptTravel: id parameter was undefined.')
+			return false;
+		}
+		if (id === currentNode) {
+			return false; // common case, no action required. return silently.
+		}
+		if (getNearby().includes(id)) {
+			return travelTo(id);
+		}
+		return false;
 	}
 
+	// Initialize the Graph Explorer.  See above for definition of init()
+	init();
+
+	// returns the public variables/functions through closure.
+	return {
+		solved,        // v: set of solved nodes.
+		fullGraph,     // v: Map of Sets : adjacency list of all nodes
+		discovered,    // v: set of discovered nodes.
+		unids,         // v: set of unknown nodes
+		solve,         // f(node): solves a previously discovered node
+		discover,      // f(node): THE NODE DISCOVERY ALGORITHM.
+		travelTo,      // f(node): directly teleports to node.
+		attemptTravel, // f(node): travels to adjacent node if it's possible.
+		isSolved,      // f(node): returns {true, false} if node is solved.
+		getCurrent,    // f(): returns current Node that player is at.
+		getPrevious,   // f(): returns the previous Node that player WAS at.
+		getNearby,     // f(): returns a list of adjacent nodes.
+	}
 }())
 
 
