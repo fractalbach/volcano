@@ -13,39 +13,54 @@
         <div id="wholescreen">
 
 
-            <div id="overlay-default" class="middleOverlay">
-                <div class="pageSection">
-                    <div id="headerWrapper">
-                        <h1>🌋 The Volcano Game 🌋</h1>
-                    </div>
-                    <!-- <div class="centerText">About the Volcano Game</div> -->
+            <div id="overlay-default" class="fullOverlay" >
 
-                    <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
-                    <div class="wrapInlineGraph">
+                    <div id="overlay-default-topRow" class="headerWithMenuButton">
+                        <div id="topRow-stats">
+                            <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
+                            <p>
+                                Room:
+                                <span id="text-currentLocation" class="textbox">Start</span>
+                                <span id="text-roomstate" class="textbox"></span>
+                            </p>
+                            <p>Monster: <span id="text-monsterinfo" class="textbox"></span></p>
+                            <p><span id="text-roomMessage" class="textbox">hello!</span></p>
+                        </div>
+                        <div id="topRow-menuContainer" style="padding: 0.5em;">
+                            <div tabindex=0 role="button" id="button-menu" class="controlButton menuButton"><span class="textIcon">☰</span></div>
+                        </div>
+                    </div>
+
+                    <div id="wrap-default-graph">
                         <div id="myExploredNetwork"></div>
                     </div>
-                    <p>
-                        Room:
-                        <span id="text-currentLocation" class="textbox">Start</span>
-                        <span id="text-roomstate" class="textbox"></span>
-                    </p>
-                    <!-- <p>Room State: <span id="text-roomstate" class="textbox"></span></p> -->
-                    <p>Monster: <span id="text-monsterinfo" class="texthighlight"></span></p>
-                    <p><span id="text-roomMessage" class="texthighlight">hello!</span></p>
-                    <h2><span style="display:none;" id="text-actionButtonTitle">Actions</span></h2>
-                    <!-- <div id='actionButtonContainer'></div> -->
+
+                    <div class="wrapControls" id='actionButtonContainer'></div>
+
+            </div>
+
+
+            <div id="overlay-FullMap" class="fullOverlay hidden">
+                <div class="headerWithMenuButton">
+                    <h1>Secret Graph</h1>
+                    <div tabindex=0 role="button" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                </div>
+                <div class="wrapGraph">
+                    <div id="mynetwork"></div>
                 </div>
             </div>
 
 
-            <div id="overlay-FullMap" class="middleOverlay hidden wrapGraph">
-                <div id="mynetwork"></div>
-            </div>
-
-
-            <div id="overlay-about" class="middleOverlay hidden">
+            <div id="overlay-about" class="fullOverlay ">
                 <div class="pageSection">
-                    <h1>About the Volcano Game</h1>
+                    <div id="headerWrapper">
+                        <h1>🌋 The Volcano Game 🌋</h1>
+                    </div>
+
+                    <div class="centerText"><div tabindex=0 role="button" id="button-playGame" class="rectangleButton">Play Game</div></div>
+
+
+                    <h2>About the Volcano Game</h2>
                     <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
                     <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
                         The decision-based gameplay, and having only 1 life, is influenced by <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
@@ -54,13 +69,15 @@
                 </div>
             </div>
 
-
-            <div class="wrapControls" id='actionButtonContainer'>
-                <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
-                <!-- <div tabindex=0 role="button" class="controlButton" id="button-about">About</div> -->
-                <!-- <div tabindex=0 role="button" class="controlButton" id="button-reload" onclick="location.reload(false);">Reload</div> -->
-                <!-- <div tabindex=0 role="button" class="controlButton" id="button-Explore">Map</div> -->
-                <!-- <div tabindex=0 role="button" class="controlButton" id="button-Items">Items</div> -->
+            <div id="overlay-menu" class="fullOverlay hidden">
+                <div class="pageSection">
+                    <div class="headerWithMenuButton">
+                        <h1>Menu</h1>
+                        <div tabindex=0 role="button" id="button-closeMenu" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                    </div>
+                    <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
+                    <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
+                </div>
             </div>
 
 

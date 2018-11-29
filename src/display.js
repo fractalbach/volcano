@@ -4,7 +4,7 @@
 var GraphDisplay = (function() {
 
 	let options = {
-		clickToUse: true,
+		// clickToUse: true,
 		height: '100%',
 		width: '100%',
 		nodes: {
@@ -17,9 +17,9 @@ var GraphDisplay = (function() {
 				roundness: 0.1
 			},
 		},
-		interaction: {
-			navigationButtons: true,
-		}
+		// interaction: {
+		// 	navigationButtons: true,
+		// }
 	};
 
 	// _________________________________________
@@ -143,7 +143,7 @@ var GraphDisplay = (function() {
 	// =========================================
 	let textCurrentLoc = document.querySelector('#text-currentLocation');
 	let textRoomState = document.querySelector('#text-roomstate');
-	let textActionTitle = document.querySelector('#text-actionButtonTitle');
+	// let textActionTitle = document.querySelector('#text-actionButtonTitle');
 	let textMonsterInfo = document.querySelector('#text-monsterinfo');
 	let textRoomMessage = document.querySelector('#text-roomMessage');
 	let healthBar = document.querySelector('#health');
@@ -180,12 +180,12 @@ var GraphDisplay = (function() {
 	const updateActionButtons = ()=> {
 		ActionButtons.clear();
 		if (GraphExplorer.isSolved(GraphExplorer.getCurrent())) {
-			textActionTitle.innerText = `Travel:`;
+			// textActionTitle.innerText = `Travel:`;
 			textRoomState.innerText = `✔️ Solved ✔️`;
 			textMonsterInfo.innerText = 'clear';
 			addTravelButtons();
 		} else {
-			textActionTitle.innerText = `Fight or Flight:`
+			// textActionTitle.innerText = `Fight or Flight:`
 			textRoomState.innerText = '⚔️ battle ⚔️';
 			updateMonsterText();
 			showBattleOption();
