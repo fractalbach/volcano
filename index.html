@@ -12,6 +12,7 @@
     <body>
         <div id="wholescreen">
 
+            <div id="blank-overlay-background"></div>
 
             <div id="overlay-default" class="fullOverlay" >
 
@@ -26,7 +27,7 @@
                             <p>Monster: <span id="text-monsterinfo" class="textbox"></span></p>
                             <p><span id="text-roomMessage" class="textbox">hello!</span></p>
                         </div>
-                        <div id="topRow-menuContainer" style="padding: 0.5em;">
+                        <div id="topRow-menuContainer" class="menuButtonWrapper">
                             <div tabindex=0 role="button" id="button-menu" class="controlButton menuButton"><span class="textIcon">☰</span></div>
                         </div>
                     </div>
@@ -43,7 +44,9 @@
             <div id="overlay-FullMap" class="fullOverlay hidden">
                 <div class="headerWithMenuButton">
                     <h1>Secret Graph</h1>
-                    <div tabindex=0 role="button" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                    <div class="menuButtonWrapper">
+                        <div tabindex=0 role="button" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                    </div>
                 </div>
                 <div class="wrapGraph">
                     <div id="mynetwork"></div>
@@ -61,9 +64,9 @@
 
 
                     <h2>About the Volcano Game</h2>
-                    <p>Made for <a href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
+                    <p>Made for <a target=”_blank” href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
                     <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
-                        The decision-based gameplay, and having only 1 life, is influenced by <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
+                        The decision-based gameplay, and having only 1 life, is influenced by <a target=”_blank” href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
                         Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
                         rather than graphics.</p>
                 </div>
@@ -73,10 +76,14 @@
                 <div class="pageSection">
                     <div class="headerWithMenuButton">
                         <h1>Menu</h1>
-                        <div tabindex=0 role="button" id="button-closeMenu" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                        <div class="menuButtonWrapper">
+                            <div tabindex=0 role="button" id="button-closeMenu" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
+                        </div>
                     </div>
-                    <div tabindex=0 role="button" class="controlButton" id="button-FullMap">Secret Map</div>
-                    <div tabindex=0 role="button" class="controlButton" id="button-about">About</div>
+                    <div class="centerText menuBlocks">
+                        <div tabindex=0 role="button" class="rectangleButton" id="button-FullMap">Secret Map</div>
+                        <div tabindex=0 role="button" class="rectangleButton" id="button-about">About</div>
+                    </div>
                 </div>
             </div>
 

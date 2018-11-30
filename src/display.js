@@ -8,9 +8,18 @@ var GraphDisplay = (function() {
 		height: '100%',
 		width: '100%',
 		nodes: {
-			shape: 'circle'
+			labelHighlightBold: false,
+			borderWidthSelected: 1,
+			shape: 'square',
+			font: {
+				color: 'white',
+				size: 20,
+			},
 		},
 		edges: {
+			color: {
+				inherit: false,
+			},
 			smooth: {
 				enabled: true,
 				type: 'dynamic',
@@ -55,23 +64,27 @@ var GraphDisplay = (function() {
 		d.edges = dataConverter.removeDuplicateEdges(d.edges);
 		let current = GraphExplorer.getCurrent();
 		for (let n of d.nodes) {
-			if (n.id !== current) {
-				n['color']['border'] = 'lightgray';
-			}
 			if (n.id === current) {
-				n['color']['border'] = 'red';
-				n['borderWidth'] = 3;
+				n['color']['border'] = '#40f'
+				n['color']['background'] = '#67fffe';
+				n['borderWidth'] = 4;
+				continue;
+			}
+			if (n.id !== current) {
+				n['color']['border'] = 'black';
 			}
 			if (GraphExplorer.unids.has(n.id)) {
-				n['color']['background'] = 'white';
-				continue;
-			} else if (!GraphExplorer.isSolved(n.id)) {
-				n['color']['background'] = '#f0f5ff';
+				n['shape'] = 'circle';
+				n['color']['background'] = 'rgba(0,0,0,0.3)';
+			// } else if (!GraphExplorer.isSolved(n.id)) {
+			} else {
+				n['color']['background'] = 'green';
 			}
 		}
 		myExploredNetwork.setData(d);
 		myExploredNetwork.setOptions(options);
-		myExploredNetwork.fit();
+		// myExploredNetwork.fit();
+		// myExploredNetwork.moveTo();
 	};
 
 
