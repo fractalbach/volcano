@@ -161,6 +161,8 @@ var GraphDisplay = (function() {
 	let textRoomMessage = document.querySelector('#text-roomMessage');
 	let healthBar = document.querySelector('#health');
 
+	let multiTextVolcanoLevel = document.getElementsByClassName('text-volcanoLevel');
+
 	// _________________________________________
 	//  Update All
 	// =========================================
@@ -181,6 +183,8 @@ var GraphDisplay = (function() {
 		updateRoomMessageText(currentRoom);
 		updateActionButtons();
 		updateHealthBar();
+		checkPlayerHealth();
+		checkForWin();
 		GraphDisplay.updateExploredGraph();
 	}
 
@@ -235,6 +239,12 @@ var GraphDisplay = (function() {
 		healthBar.value = hp
 		healthBar.max = max
 		healthBar.innerText = hp
+	}
+
+	const updateVolcanoLevelText = ()=> {
+		for (let element of multiTextVolcanoLevel) {
+			element.innerText = `${GraphExplorer.volcanoLevel}`;
+		}
 	}
 
 	// showBattleOption is a simple button that fights the monster
@@ -293,6 +303,25 @@ var GraphDisplay = (function() {
 	}
 
 	// _________________________________________
+	//  Winning and Losing
+	// =========================================
+
+	const checkPlayerHealth = ()=> {
+		if (game.myplayer.isAlive() === false) {
+			OverlayDisplay.openLosePage();
+		}
+	}
+
+	const checkForWin = ()=> {
+		if (
+			(GraphExplorer.isSolved('finish')) &&
+			(GraphExplorer.getCurrent() === 'finish')
+		) {
+			OverlayDisplay.openWinPage();
+		}
+	}
+
+	// _________________________________________
 	//  Attempt to travel to a clicked node
 	// =========================================
 
@@ -317,6 +346,7 @@ var GraphDisplay = (function() {
 	// buttons.  These should always be on the 'START' room.
 	updateAll();
 	initSelectedNodeTravelHandler();
+	updateVolcanoLevelText();
 
 	// Display debug information to the console.
 	console.log('GraphExplorer:\n', GraphExplorer);

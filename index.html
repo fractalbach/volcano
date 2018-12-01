@@ -21,7 +21,7 @@
                             <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
                             <p>
                                 Room:
-                                <span id="text-currentLocation" class="textbox">Start</span>
+                                <span id="text-currentLocation" class="textbox outlined ">Start</span>
                                 <span id="text-roomstate" class="textbox"></span>
                             </p>
                             <p>Monster: <span id="text-monsterinfo" class="textbox"></span></p>
@@ -64,9 +64,9 @@
 
 
                     <h2>About the Volcano Game</h2>
-                    <p>Made for <a target=”_blank” href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
+                    <p>Made for <a target="_blank" href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
                     <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
-                        The decision-based gameplay, and having only 1 life, is influenced by <a target=”_blank” href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
+                        The decision-based gameplay, and having only 1 life, is influenced by <a target="_blank" href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
                         Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
                         rather than graphics.</p>
                 </div>
@@ -75,14 +75,44 @@
             <div id="overlay-menu" class="fullOverlay hidden">
                 <div class="pageSection">
                     <div class="headerWithMenuButton">
-                        <h1>Menu</h1>
+                        <h1>Main Menu</h1>
                         <div class="menuButtonWrapper">
                             <div tabindex=0 role="button" id="button-closeMenu" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
                         </div>
                     </div>
+                    <p class="centerText">Current volcano level: <span class="text-volcanoLevel textbox outlined"</p>
                     <div class="centerText menuBlocks">
                         <div tabindex=0 role="button" class="rectangleButton" id="button-FullMap">Secret Map</div>
                         <div tabindex=0 role="button" class="rectangleButton" id="button-about">About</div>
+                        <a target="_blank" href="https://github.com/fractalbach/volcano">
+                            <div tabindex=0 role="button" class="rectangleButton">Source Code on Github</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="overlay-win" class="fullOverlay hidden">
+                <div class="pageSection winningBackground">
+                    <h1>Congratulations!</h1>
+                    <p>You've defeated level <span class="text-volcanoLevel textbox outlined">1</span> of the vocano!</p>
+                    <p>There's a passage to the surface from here, and a tunnel that goes deeper into the heart of the voclano.  What would you like to do? </p>
+                    <div class="centerText menuBlocks">
+                        <div tabindex=0 role="button" class="rectangleButton" id="button-surface">Return to surface</div>
+                        <!-- <div tabindex=0 role="button" class="rectangleButton" id="button-deeper">Go Deeper</div> -->
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="overlay-lose" class="fullOverlay hidden">
+                <div class="pageSection">
+                    <h1>Oh no!</h1>
+                    <p class="centerText">The volcano defeated you!</p>
+                    <p class="centerText">You reached level <span class="text-volcanoLevel textbox outlined">1</span> of the volcano.</p>
+                    <div class="centerText menuBlocks">
+                        <div tabindex=0 role="button" class="rectangleButton" id="button-playAgain">Play Again</div>
                     </div>
                 </div>
             </div>

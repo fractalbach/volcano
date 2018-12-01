@@ -1,13 +1,21 @@
 // _________________________________________
 //  Overlay Togglers
 // =========================================
-(function() {
+OverlayDisplay = (function() {
+
+	// special buttons and overlays
+	let winPage = document.querySelector('#overlay-win')
+	let losePage = document.querySelector('#overlay-lose')
+	let buttonPlayAgain = document.querySelector('#button-playAgain');
+	let buttonSurface = document.querySelector('#button-surface');
 
 	// overlayList contains all the overlays that will be closed and hidden.
 	let overlayList = [
 		'#overlay-FullMap',
 		'#overlay-about',
 		'#overlay-menu',
+		'#overlay-win',
+		'#overlay-lose',
 	]
 
 	// overlay closers are buttons that reveal the default screen.
@@ -61,6 +69,26 @@
 		button.addEventListener('keypress', closeAllOverlays)
 	}
 
+	// _________________________________________
+	//  Winning and Losing
+	// =========================================
+
+	const openWinPage = ()=> openOverlay(winPage)
+	const openLosePage = ()=> openOverlay(losePage)
+
+	const playAgain = ()=> window.location.reload(false);
+
+	buttonPlayAgain.addEventListener('click', playAgain)
+	buttonSurface.addEventListener('click', playAgain)
+
+	// _________________________________________
+	//  Return closure
+	// =========================================
+
+	return {
+		openWinPage,
+		openLosePage,
+	}
 
 	// Special Format: (button, overlay, originText, activeText)
 	// Used to create overlay togglers by pressing these buttons.
@@ -73,7 +101,7 @@
 	// currentlyEnabled corresponds to the index of buttons_and_their_overlays.
 	// when the value is -1, it means that there is no overlay active, and the
 	// default beneath will be shown.
-	let currentlyEnabled = -1;
+	// let currentlyEnabled = -1;
 
 	// let disable = (n)=> {
 	// 	let [$button, $overlay, originText, activeText] = buttons_and_their_overlays[n];

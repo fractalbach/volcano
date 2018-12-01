@@ -48,6 +48,10 @@ p {
     margin-bottom: 0.5em;
 }
 
+.outlined {
+    outline: 1px solid lightgray;
+}
+
 .textIcon{
     font-size: 2em;
     vertical-align: middle;
@@ -62,9 +66,8 @@ p {
     grid-auto-rows: repeat(auto);
 }
 
-.menuBlocks > div {
+.menuBlocks > * {
     margin: 1em auto;
-    padding: 1em 5em ;
     display: block;
 }
 
@@ -92,11 +95,14 @@ p {
     padding: 2px;
     display: inline-flex;
     font-family: fantasy;
-    outline: 1px solid lightgray;
+    /* outline: 1px solid lightgray; */
     text-transform: capitalize;
     /* font-variant: petite-caps; */
 }
 
+.winningBackground {
+    background: linear-gradient(0deg, rgba(0,0,0,1), rgba(128,2,2,1) 25% , rgba(15, 65, 203, 0.7) 100%);
+}
 
 /*=========================================================
                     Graphs

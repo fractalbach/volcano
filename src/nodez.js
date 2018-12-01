@@ -230,6 +230,9 @@ var GraphGenerator = (function() {
 */
 let GraphExplorer = (function(){
 
+	// current level in the volcano. (not the definition as graph level)
+	let volcanoLevel = 1;
+
 	// current and previous nodes record your position.
 	let currentNode = 'start';
 	let previousNode = 'start';
@@ -383,6 +386,7 @@ let GraphExplorer = (function(){
 
 	// returns the public variables/functions through closure.
 	return {
+		volcanoLevel,  // v: your current level in the volcano.
 		solved,        // v: set of solved nodes.
 		fullGraph,     // v: Map of Sets : adjacency list of all nodes
 		discovered,    // v: set of discovered nodes.
