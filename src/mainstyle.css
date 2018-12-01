@@ -125,14 +125,15 @@ p {
 }
 
 #HowToPlayTable > tbody > tr > td:first-child  {
-    width: 5em;
-    height: 5em;
+    width: 4.22em;
+    height: 3em;
     border: 1px solid white;
 }
 
 #HowToPlayTable > tbody > tr > td:nth-child(2) {
     /* border: 1px solid white; */
 }
+
 
 /*=========================================================
                     Graphs
@@ -210,6 +211,7 @@ p {
 /*=========================================================
                     Buttons  - Rectangles
 =========================================================*/
+
 
 .wrapControls {
     user-select: none;
@@ -292,6 +294,7 @@ p {
 #button-playGame {
     margin: auto;
     text-align: center;
+    font-size: 120%;
 }
 
 
