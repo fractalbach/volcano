@@ -146,7 +146,7 @@ p {
 
 #wrap-default-graph {
     display: flex;
-    object-fit: cover;
+    align-self: stretch;
     overflow: hidden;
     padding: 1em;
 }
@@ -195,7 +195,7 @@ p {
 #overlay-default {
     z-index: -2;
     display: grid;
-    grid-template-rows: 8em auto 6em;
+    grid-template-rows: 8em 1fr 6em;
 }
 
 #overlay-FullMap {
