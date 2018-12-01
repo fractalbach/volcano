@@ -233,6 +233,8 @@ p {
     padding: 1em;
     border-image: repeating-linear-gradient(45deg, #000, #990101 , #ffc800, #ff0000, #000 25%) 1;
     outline: none;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
 }
 
 .rectangleButton:focus, .rectangleButton:selected {
