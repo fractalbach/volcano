@@ -151,6 +151,9 @@ p {
     padding: 1em;
 }
 
+#myExploredNetwork {
+}
+
 #mynetwork, #myExploredNetwork {
     border: 1px solid lightgray;
     width: 100%;
@@ -192,7 +195,7 @@ p {
 #overlay-default {
     z-index: -2;
     display: grid;
-    grid-template-rows: 8em 1fr 6em;
+    grid-template-rows: 8em auto 6em;
 }
 
 #overlay-FullMap {
