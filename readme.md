@@ -16,36 +16,52 @@ find a new path.
 	- generated room names for humans
 	- special rooms
 - web display
-	- buttons 
-		- generated based on availiable actions
-		- movement-related buttons
-	- minimap of visited places
-		- tree is built as you explore.
+	- buttons
+		- for fighting or running.
+		- movement-related buttons.
+		- graph is built as you explore it.
 	- message box for text-based version
-	- canvas/svg for visual version
-	- inventory
-		- pictures for each type of item
+	- vis.js for graph display
 - combat system
-	- time-based-turns
+	- very simple.
 	- stats
 	- monsters
 	- player
-	- randomness
-- items
-	- treasure
-	- inventory
+	- randomized monster stats.
 
 
-	
-## Map Features
+
+
+# Planned Features
+
+(README poetically.)
+
+Everything else below this point is planned for development, and is still
+just bubbling underneath the surface of the volcano.  These ideas, like the
+magma beneath a volcano, will soon erupt to the surface, covering the volcano
+game in a fiery hot development layer of experiment: but later cooling in a
+solid layer of great features.  
+Producing a new and beautiful volcano game, built from the foundations of the
+previous volcano, but new and different on the surface.
+
+
+(that's right, I just compared software engineering to a volcano.)
+
+
+
+## Map Features and Names
+
+Randomly generated naming system for rooms and areas based on volcano related
+terms.  These names (especially if used in the right places) can make the Game
+feel much more like a volcano.
 
 You start outside the volcano, noticing features created by previous
-erruptions.  These help you identify a way to enter the volcano.
+eruptions.  These help you identify a way to enter the volcano.
 You usually enter through a vent or a lava cave entrance.  Once
 you are inside the volcano, you are mostly inside different kinds
-of lava caves.  Eventualy, you traverse you way into the main
+of lava caves.  Eventually, you traverse you way into the main
 magma chamber through the conduit.
- 
+
 
 - outside
 	- [caldera](https://en.wikipedia.org/wiki/Caldera)
@@ -57,9 +73,9 @@ magma chamber through the conduit.
 - inside
 	- conduit
 	- magma chamber
-	
-	
-	
+
+
+
 See [Stratovolcano](https://en.wikipedia.org/wiki/Stratovolcano)
 for more ideas.
 
@@ -70,7 +86,7 @@ for more ideas.
 
 Traps
 - falling rocks
-- falling stalacite 
+- falling stalacite
 - lava pit
 - steam
 - hot gas
@@ -80,16 +96,16 @@ Traps
 Monsters
 - lava creature
 - molten golem
-- phoenix 
+- phoenix
 - ash bird
 
 
 
 
-## Items 
+## Items
 
 Items can be used to craft weapons and armours while you are in
-the volcano.  It is asummed that you already have a chisel, shovel,
+the volcano.  It is assumed that you already have a chisel, shovel,
 and other basic tool.  Some items are used purely as treasure,
 and can be considered loot.  Crystals and gems can be used as
 magical items to heal you or do other neat things.
@@ -105,6 +121,3 @@ magical items to heal you or do other neat things.
 ### Craftable Materials
 - obsidian
 	- can use for arrows
-
-
- 
