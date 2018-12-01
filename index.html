@@ -14,8 +14,7 @@
 
             <div id="blank-overlay-background"></div>
 
-            <div id="overlay-default" class="fullOverlay" >
-
+            <div id="overlay-default" class="fullOverlay">
                     <div id="overlay-default-topRow" class="headerWithMenuButton">
                         <div id="topRow-stats">
                             <p>Health: <progress id="health" name="Health" max="100" value="100">100</progress></p>
@@ -31,13 +30,10 @@
                             <div tabindex=0 role="button" id="button-menu" class="controlButton menuButton"><span class="textIcon">☰</span></div>
                         </div>
                     </div>
-
                     <div id="wrap-default-graph">
                         <div id="myExploredNetwork"></div>
                     </div>
-
                     <div class="wrapControls" id='actionButtonContainer'></div>
-
             </div>
 
 
@@ -58,19 +54,28 @@
                 <div class="pageSection">
                     <div id="headerWrapper">
                         <h1>🌋 The Volcano Game 🌋</h1>
+                        <div class="subtitle">by Chris Achenbach</div>
                     </div>
-
+                    <hr/>
+                    <table id="HowToPlayTable">
+                        <tr><td>img</td> <td> &larr; Where you Start</td></tr>
+                        <tr><td>img</td> <td> &larr; Where you are</td></tr>
+                        <tr><td>img</td> <td> &larr; Regular Room</td></tr>
+                        <tr><td>img</td> <td> &larr; Unexplored Room</td></tr>
+                    </table>
                     <div class="centerText"><div tabindex=0 role="button" id="button-playGame" class="rectangleButton">Play Game</div></div>
-
-
+                    <hr/>
                     <h2>About the Volcano Game</h2>
-                    <p>Made for <a target="_blank" href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
-                    <p>The Volcano game is a mixture of different ideas and is influenced by a variety of different games.
-                        The decision-based gameplay, and having only 1 life, is influenced by <a target="_blank" href="https://en.wikipedia.org/wiki/Rogue_(video_game)">Rogue</a>.
-                        Unlike Rogue, the interface is entirely different.  I wanted this game to be more an experiment in map generation and combat mechanics,
-                        rather than graphics.</p>
+                    <div class="LotsOfText">
+                        <p>Made for <a target="_blank" href="https://itch.io/jam/game-off-2018">Game Off 2018</a>, but has been an idea brewing for awhile now.</p>
+                        <p>The Volcano Game is a combination of a text-based adventure game like ADVENT, with single-life and turn-based combat like Rouge, and is built as a web page.  The unique feature is the procedurally generated Graph-based game world.</p>
+                        <p>I wanted to create a game that was built around a non-linear world.  You have to piece together it’s structure as you go.  Using a Graph allows for freedom in the creation of interesting structures.  Paths from start to finish allow players to complete the level, and Cycles can cause you to end up back in the same place again.</p>
+                        <p>The idea of a “volcano” came from these random graphs.  Nodes are like rooms or chambers, and Edges are like tunnels and passageways.  Without a compass, it would be easy to become lost.  This aspect of the game come from ADVENT, but I didn’t want players to draw their own map: I think it’s fun to see the map as you explore it.</p>
+                        <p>It’s not just a maze.  When you walk into a room, there’s something you have to solve before you unlock its secrets and gain access to its other passageways.  I added a simple combat system so that the player had to “survive” their way through the volcano.  Currently, the game can be thought of as a Shortest path problem, because there is a cost to solve room.  You only have a finite amount of health, and each room will a take its toll.</p>
+                    </div>
                 </div>
             </div>
+
 
             <div id="overlay-menu" class="fullOverlay hidden">
                 <div class="pageSection">
@@ -80,7 +85,7 @@
                             <div tabindex=0 role="button" id="button-closeMenu" class="controlButton menuButton closeMenu"><span class="textIcon">X</span></div>
                         </div>
                     </div>
-                    <p class="centerText">Current volcano level: <span class="text-volcanoLevel textbox outlined"</p>
+                    <p class="centerText">Current volcano level: <span class="text-volcanoLevel textbox"</p>
                     <div class="centerText menuBlocks">
                         <div tabindex=0 role="button" class="rectangleButton" id="button-FullMap">Secret Map</div>
                         <div tabindex=0 role="button" class="rectangleButton" id="button-about">About</div>
@@ -105,12 +110,11 @@
             </div>
 
 
-
             <div id="overlay-lose" class="fullOverlay hidden">
                 <div class="pageSection">
                     <h1>Oh no!</h1>
                     <p class="centerText">The volcano defeated you!</p>
-                    <p class="centerText">You reached level <span class="text-volcanoLevel textbox outlined">1</span> of the volcano.</p>
+                    <p class="centerText">You reached level <span class="text-volcanoLevel textbox ">1</span> of the volcano.</p>
                     <div class="centerText menuBlocks">
                         <div tabindex=0 role="button" class="rectangleButton" id="button-playAgain">Play Again</div>
                     </div>

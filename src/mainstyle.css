@@ -15,8 +15,13 @@ html, body, #wholescreen {
 =========================================================*/
 
 
-h1, h2 {
+h1, h2, .subtitle {
     text-align: center;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.subtitle {
+    margin-bottom: 1em;
 }
 
 h3 {
@@ -72,10 +77,11 @@ p {
 }
 
 
+
+
 /*=========================================================
                     Pages of Information
 =========================================================*/
-
 
 .pageSection {
     overflow: auto;
@@ -102,6 +108,30 @@ p {
 
 .winningBackground {
     background: linear-gradient(0deg, rgba(0,0,0,1), rgba(128,2,2,1) 25% , rgba(15, 65, 203, 0.7) 100%);
+}
+
+.LotsOfText {
+    max-width: 30em;
+    margin: 0 auto;
+    text-align: justify;
+    line-height: 1.2;
+}
+.LotsOfText > p {
+    padding-bottom: 1em;
+}
+
+#HowToPlayTable {
+    margin: 1em auto;
+}
+
+#HowToPlayTable > tbody > tr > td:first-child  {
+    width: 5em;
+    height: 5em;
+    border: 1px solid white;
+}
+
+#HowToPlayTable > tbody > tr > td:nth-child(2) {
+    /* border: 1px solid white; */
 }
 
 /*=========================================================
