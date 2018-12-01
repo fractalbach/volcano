@@ -145,6 +145,8 @@ p {
 }
 
 #wrap-default-graph {
+    display: flex;
+    object-fit: cover;
     overflow: hidden;
     padding: 1em;
 }
