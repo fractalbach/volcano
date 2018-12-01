@@ -115,6 +115,7 @@ p {
     margin: 0 auto;
     text-align: justify;
     line-height: 1.2;
+    padding: 1em;
 }
 .LotsOfText > p {
     padding-bottom: 1em;
